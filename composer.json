@@ -1,0 +1,31 @@
+{
+    "name": "rspr/laravel-starter",
+    "description": "Laravel Starter Pack",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "RSPR\\LaravelStarter\\": "src/"
+        },
+        "files": [
+            "src/Helpers/GlobalHelper/rspr.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RSPR\\LaravelStarter\\ServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Cisneros",
+            "email": "work.dcisneros@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "laravel/framework": "^10.19"
+    }
+}
