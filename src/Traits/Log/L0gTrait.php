@@ -81,7 +81,7 @@ trait L0gTrait
      */
     public static function error($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_ERROR, $debugTraceCount);
+        self::log(LogHelper::TYPE_ERROR, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -98,7 +98,7 @@ trait L0gTrait
      */
     public static function warning($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_WARNING, $debugTraceCount);
+        self::log(LogHelper::TYPE_WARNING, $message, $params, $debugTraceCount);
     }
 
     /**
