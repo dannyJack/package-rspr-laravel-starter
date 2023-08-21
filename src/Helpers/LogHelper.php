@@ -1,6 +1,6 @@
 <?php
 
-namespace RSPR\LaravelStarter\Foundation\Log;
+namespace RSPR\LaravelStarter\Helpers;
 
 class LogHelper
 {
