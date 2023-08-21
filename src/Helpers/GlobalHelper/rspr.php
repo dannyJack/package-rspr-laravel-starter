@@ -1,6 +1,6 @@
 <?php
 
-use RSPR\LaravelStarter\Tratis\PublicFileImportTrait;
+use RSPR\LaravelStarter\Traits\PublicFileImportTrait;
 
 class rspr
 {
