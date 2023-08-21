@@ -33,7 +33,7 @@ trait L0gTrait
      * System is unusable.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function emergency(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -47,7 +47,7 @@ trait L0gTrait
      * Action must be taken immediately.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function alert(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -61,7 +61,7 @@ trait L0gTrait
      * Critical conditions.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function critical(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -76,7 +76,7 @@ trait L0gTrait
      * be logged and monitored.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function error($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -93,7 +93,7 @@ trait L0gTrait
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function warning($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -107,7 +107,7 @@ trait L0gTrait
      * Normal but significant events.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function notice(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -123,7 +123,7 @@ trait L0gTrait
      * L0gTrait::info($message)
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function info(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -137,7 +137,7 @@ trait L0gTrait
      * Detailed debug information.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function debug(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
@@ -150,9 +150,10 @@ trait L0gTrait
     .*======================================================================*/
 
     /**
+     * @param string $logType
      * @param string $message
-     * @param array $params
-     * @param int $logType
+     * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
     private static function log(string $logType, string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)

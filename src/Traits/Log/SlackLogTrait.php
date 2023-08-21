@@ -17,7 +17,7 @@ trait SlackLogTrait
      * System is unusable.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function emergency(string $message, ...$params)
@@ -31,7 +31,7 @@ trait SlackLogTrait
      * Action must be taken immediately.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function alert(string $message, ...$params)
@@ -45,7 +45,7 @@ trait SlackLogTrait
      * Critical conditions.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function critical(string $message, ...$params)
@@ -60,7 +60,7 @@ trait SlackLogTrait
      * be logged and monitored.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function error($message, ...$params)
@@ -77,7 +77,7 @@ trait SlackLogTrait
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function warning($message, ...$params)
@@ -91,7 +91,7 @@ trait SlackLogTrait
      * Normal but significant events.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function notice(string $message, ...$params)
@@ -107,7 +107,7 @@ trait SlackLogTrait
      * SlackLogTrait::info($message)
      * send slack log message
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function info(string $message, ...$params)
@@ -121,7 +121,7 @@ trait SlackLogTrait
      * Detailed debug information.
      *
      * @param string $message
-     * @param object|array|string|int ...$params
+     * @param object|array|string|int $params
      * @return void
      */
     public static function debug(string $message, ...$params)
@@ -153,9 +153,9 @@ trait SlackLogTrait
     }
 
     /**
+     * @param string $logType
      * @param string $message
-     * @param array $params
-     * @param int $logType
+     * @param object|array|string|int $params
      * @return void
      */
     private static function log(string $logType, string $message, object|array|string|int $params = [])
