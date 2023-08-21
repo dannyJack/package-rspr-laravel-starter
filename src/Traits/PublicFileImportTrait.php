@@ -1,6 +1,6 @@
 <?php
 
-namespace RSPR\LaravelStarter\Tratis;
+namespace RSPR\LaravelStarter\Traits;
 
 trait PublicFileImportTrait
 {
