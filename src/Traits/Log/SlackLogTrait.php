@@ -65,7 +65,7 @@ trait SlackLogTrait
      */
     public static function error($message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_ERROR);
+        self::log(LogHelper::TYPE_ERROR, $message, []);
     }
 
     /**
@@ -82,7 +82,7 @@ trait SlackLogTrait
      */
     public static function warning($message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_WARNING);
+        self::log(LogHelper::TYPE_WARNING, $message, []);
     }
 
     /**
