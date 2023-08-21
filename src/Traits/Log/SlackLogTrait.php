@@ -22,7 +22,7 @@ trait SlackLogTrait
      */
     public static function emergency(string $message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_EMERGENCY);
+        self::log(LogHelper::TYPE_EMERGENCY, $message, []);
     }
 
     /**
@@ -36,7 +36,7 @@ trait SlackLogTrait
      */
     public static function alert(string $message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_ALERT);
+        self::log(LogHelper::TYPE_ALERT, $message, []);
     }
 
     /**
@@ -50,12 +50,11 @@ trait SlackLogTrait
      */
     public static function critical(string $message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_CRITICAL);
+        self::log(LogHelper::TYPE_CRITICAL, $message, []);
     }
 
     /**
      * SlackLogTrait::error($message)
-     * call the self::constructMessage() method
      *
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
@@ -71,7 +70,6 @@ trait SlackLogTrait
 
     /**
      * SlackLogTrait::warning($message)
-     * call the self::constructMessage() method
      *
      * Exceptional occurrences that are not errors.
      *
@@ -98,7 +96,7 @@ trait SlackLogTrait
      */
     public static function notice(string $message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_NOTICE);
+        self::log(LogHelper::TYPE_NOTICE, $message, []);
     }
 
     /**
@@ -114,7 +112,7 @@ trait SlackLogTrait
      */
     public static function info(string $message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_INFO);
+        self::log(LogHelper::TYPE_INFO, $message, []);
     }
 
     /**
@@ -128,7 +126,7 @@ trait SlackLogTrait
      */
     public static function debug(string $message, ...$params)
     {
-        self::log($message, [], LogHelper::TYPE_DEBUG);
+        self::log(LogHelper::TYPE_DEBUG, $message, []);
     }
 
     /*======================================================================
@@ -142,12 +140,12 @@ trait SlackLogTrait
      * @param string $message
      * @return string $rtn
      */
-    private static function preProcessMessage($message)
+    private static function preProcessMessage(string $message)
     {
         $rtn = $message;
 
-        if (!empty(config('slackLog.projectName', ''))) {
-            $str = 'Project Name: ' . config('slackLog.projectName', '') . "\n";
+        if (!empty(config('rsprLog.projectName', ''))) {
+            $str = 'Project Name: ' . config('rsprLog.projectName', '') . "\n";
             $rtn = $str . $message;
         }
 
@@ -160,20 +158,23 @@ trait SlackLogTrait
      * @param int $logType
      * @return void
      */
-    private static function log(string $message, $params, string $logType)
+    private static function log(string $logType, string $message, object|array|string|int $params = [])
     {
         $allowLog = false;
-        $channel = config('slackLog.channel', null);
+        $channel = config('rsprLog.slack.channel', null);
 
-        if (config('slackLog.enable', false)) {
-            if (!empty(config('slackLog.webhookUrl', ''))) {
+        if (config('rsprLog.slack.enable', false)) {
+            if (!empty(config('rsprLog.slack.webhookUrl', ''))) {
                 $message = self::preProcessMessage($message);
+                $endLineUnderscoreCount = config('rsprLog.slack.endLineUnderscoreCount', config('rsprLog.endLineUnderscoreCount', 173));
+                $traceFilePathCharacterLimit = config('rsprLog.slack.traceFilePathCharacterLimit', config('rsprLog.traceFilePathCharacterLimit'));
+                $message = LogHelper::constructMessage($logType, $message, $params, 1, null, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
                 $allowLog = true;
             } else {
                 L0g::error('Slack Log is not working properly.', [
-                    'slackLog.channel' => $channel,
-                    'slackLog.enable' => config('slackLog.enable', false),
-                    'slackLog.webhookUrl' => config('slackLog.webhookUrl', ''),
+                    'rsprLog.slack.channel' => $channel,
+                    'rsprLog.slack.enable' => config('rsprLog.slack.enable', false),
+                    'rsprLog.slack.webhookUrl' => config('rsprLog.slack.webhookUrl', ''),
                     'log type' => $logType
                 ]);
             }

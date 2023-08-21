@@ -29,7 +29,6 @@ trait L0gTrait
 
     /**
      * L0gTrait::emergency($message)
-     * call the LogHelper::constructMessage() method
      *
      * System is unusable.
      *
@@ -37,14 +36,13 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function emergency(string $message, ...$params)
+    public static function emergency(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_EMERGENCY);
+        self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceCount);
     }
 
     /**
      * L0gTrait::alert($message)
-     * call the LogHelper::constructMessage() method
      *
      * Action must be taken immediately.
      *
@@ -52,14 +50,13 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function alert(string $message, ...$params)
+    public static function alert(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_ALERT);
+        self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceCount);
     }
 
     /**
      * L0gTrait::critical($message)
-     * call the LogHelper::constructMessage() method
      *
      * Critical conditions.
      *
@@ -67,14 +64,13 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function critical(string $message, ...$params)
+    public static function critical(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_CRITICAL);
+        self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceCount);
     }
 
     /**
      * L0gTrait::error($message)
-     * call the self::constructMessage() method
      *
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
@@ -83,14 +79,13 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function error($message, ...$params)
+    public static function error($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_ERROR);
+        self::log($message, $params, LogHelper::TYPE_ERROR, $debugTraceCount);
     }
 
     /**
      * L0gTrait::warning($message)
-     * call the self::constructMessage() method
      *
      * Exceptional occurrences that are not errors.
      *
@@ -101,14 +96,13 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function warning($message, ...$params)
+    public static function warning($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_WARNING);
+        self::log($message, $params, LogHelper::TYPE_WARNING, $debugTraceCount);
     }
 
     /**
      * L0gTrait::notice($message)
-     * call the LogHelper::constructMessage() method
      *
      * Normal but significant events.
      *
@@ -116,9 +110,9 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function notice(string $message, ...$params)
+    public static function notice(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_NOTICE);
+        self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -127,20 +121,18 @@ trait L0gTrait
      * Example: User logs in, SQL logs.
      *
      * L0gTrait::info($message)
-     * call the LogHelper::constructMessage() method
      *
      * @param string $message
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function info(string $message, ...$params)
+    public static function info(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_INFO);
+        self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceCount);
     }
 
     /**
      * L0gTrait::debug($message)
-     * call the LogHelper::constructMessage() method
      *
      * Detailed debug information.
      *
@@ -148,9 +140,9 @@ trait L0gTrait
      * @param object|array|string|int ...$params
      * @return void
      */
-    public static function debug(string $message, ...$params)
+    public static function debug(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log($message, $params, LogHelper::TYPE_DEBUG);
+        self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceCount);
     }
 
     /*======================================================================
@@ -163,9 +155,9 @@ trait L0gTrait
      * @param int $logType
      * @return void
      */
-    private static function log(string $message, $params, string $logType)
+    private static function log(string $logType, string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        $message = LogHelper::constructMessage($logType, $message, $params);
+        $message = LogHelper::constructMessage($logType, $message, $params, 1, $debugTraceCount);
 
         switch ($logType) {
             case LogHelper::TYPE_EMERGENCY:
