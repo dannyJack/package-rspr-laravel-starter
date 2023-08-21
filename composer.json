@@ -8,7 +8,10 @@
             "RSPR\\LaravelStarter\\": "src/"
         },
         "files": [
-            "src/Helpers/GlobalHelper/rspr.php"
+            "src/Helpers/GlobalHelper/rspr.php",
+            "src/Helpers/GlobalHelper/RSPRLog.php",
+            "src/Helpers/GlobalHelper/RSPRL0g.php",
+            "src/Helpers/GlobalHelper/RSPRSlackLog.php"
         ]
     },
     "extra": {

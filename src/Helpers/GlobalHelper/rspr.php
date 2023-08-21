@@ -1,10 +1,8 @@
 <?php
 
-namespace RSPR\LaravelStarter\Helpers\GlobalHelper;
+use RSPR\LaravelStarter\Tratis\PublicFileImportTrait;
 
-use RSPR\LaravelStarter\Helpers\PublicFileImportHelper;
-
-class rspr extends PublicFileImportHelper
+class rspr
 {
-    //
+    use PublicFileImportTrait;
 }

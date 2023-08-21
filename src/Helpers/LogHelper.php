@@ -1,6 +1,6 @@
 <?php
 
-namespace RSPR\LaravelStarter\Helpers;
+namespace RSPR\LaravelStarter\Foundation\Log;
 
 class LogHelper
 {
@@ -9,9 +9,14 @@ class LogHelper
     .*======================================================================*/
 
     const DEBUGTRACE_CNT = 4;
-    const TYPE_INFO = 'info';
+    const TYPE_EMERGENCY = 'emergency';
+    const TYPE_ALERT = 'alert';
+    const TYPE_CRITICAL = 'critical';
     const TYPE_ERROR = 'error';
     const TYPE_WARNING = 'warning';
+    const TYPE_NOTICE = 'notice';
+    const TYPE_INFO = 'info';
+    const TYPE_DEBUG = 'debug';
 
     /*======================================================================
     .* PROPERTIES
@@ -36,10 +41,10 @@ class LogHelper
     .*======================================================================*/
 
     /**
-     * L0gHelper::constructMessage($type, $message)
+     * LogHelper::constructMessage($type, $message)
      * construct message for information/error log
      *
-     * @param L0gHelper::TYPE_ (String) $type
+     * @param LogHelper::TYPE_ (String) $type
      * @param string $message
      * @param array $params [title][code][user][otherDetails][traceCount][...]
      * @return string $logMessage;
