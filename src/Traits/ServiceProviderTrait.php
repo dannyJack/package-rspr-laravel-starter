@@ -15,7 +15,7 @@ trait ServiceProviderTrait
     private function setData()
     {
         $this->pubConfig = [
-            __DIR__ . '/../../config/slackLog.php' => config_path('../app/config/slackLog.php')
+            __DIR__ . '/../../config/slackLog.php' => config_path('../config/slackLog.php')
         ];
     }
 }
