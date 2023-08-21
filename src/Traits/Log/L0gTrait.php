@@ -163,7 +163,7 @@ trait L0gTrait
      * @param int $logType
      * @return void
      */
-    private static function log(string $message, $params, int $logType)
+    private static function log(string $message, $params, string $logType)
     {
         $message = LogHelper::constructMessage($logType, $message, $params);
 
