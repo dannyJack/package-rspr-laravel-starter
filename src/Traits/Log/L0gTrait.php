@@ -2,7 +2,7 @@
 
 namespace RSPR\LaravelStarter\Traits\Log;
 
-use RSPR\LaravelStarter\Foundation\Log\LogHelper;
+use RSPR\LaravelStarter\Helpers\LogHelper;
 
 trait L0gTrait
 {

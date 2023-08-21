@@ -3,7 +3,7 @@
 namespace RSPR\LaravelStarter\Traits\Log;
 
 use RSPR\LaravelStarter\Facades\L0g;
-use RSPR\LaravelStarter\Foundation\Log\LogHelper;
+use RSPR\LaravelStarter\Helpers\LogHelper;
 
 trait SlackLogTrait
 {
