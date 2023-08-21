@@ -9,7 +9,7 @@ trait ServiceProviderTrait
     protected function registerPublishers()
     {
         $this->setData();
-        $this->publishes($this->pubConfig, 'config');
+        $this->publishes($this->pubConfig, 'rspr-config');
     }
     
     private function setData()
