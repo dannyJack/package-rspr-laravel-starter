@@ -101,7 +101,11 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/views/layouts/auth/app.blade.php') => $this->customProjectPath('resources/views/layouts/auth/app.blade.php'),
             $this->customCurrentPath('resources/views/layouts/auth/aside.blade.php') => $this->customProjectPath('resources/views/layouts/auth/aside.blade.php'),
             $this->customCurrentPath('resources/views/layouts/auth/content-header.blade.php') => $this->customProjectPath('resources/views/layouts/auth/content-header.blade.php'),
-            $this->customCurrentPath('resources/views/layouts/auth/header.blade.php') => $this->customProjectPath('resources/views/layouts/auth/header.blade.php')
+            $this->customCurrentPath('resources/views/layouts/auth/header.blade.php') => $this->customProjectPath('resources/views/layouts/auth/header.blade.php'),
+            $this->customCurrentPath('resources/views/layouts/common/app.blade.php') => $this->customProjectPath('resources/views/layouts/common/app.blade.php'),
+            $this->customCurrentPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php') => $this->customProjectPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php'),
+            $this->customCurrentPath('resources/views/pages/auth/dashboard/index.blade.php') => $this->customProjectPath('resources/views/pages/auth/dashboard/index.blade.php'),
+            $this->customCurrentPath('resources/views/pages/guest/auth/login.blade.php') => $this->customProjectPath('resources/views/pages/guest/auth/login.blade.php')
         ];
         $this->pubViteConfig = [
             $this->customCurrentPath('root-files/vite.config.js') => $this->customProjectPath('vite.config.js')
