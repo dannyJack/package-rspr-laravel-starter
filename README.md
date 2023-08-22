@@ -17,8 +17,8 @@ download the package via composer
 
 ### Files
 
-* Facades/L0g.php - Custom message logs, uses the original laravel logging class \Log::class, this helps the logging message to be more readable
-* Facades/SlackLog.php - Slack log message which use webhooks from slack API, this helps the logging message to be more readable
+* Library/L0g.php - Custom message logs, uses the original laravel logging class \Log::class, this helps the logging message to be more readable
+* Library/SlackLog.php - Slack log message which use webhooks from slack API, this helps the logging message to be more readable
 
 ### Methods
 
