@@ -1,6 +1,6 @@
 <?php
 
-namespace RSPR\LaravelStarter\Facades;
+namespace RSPR\LaravelStarter\Library;
 
 use RSPR\LaravelStarter\Traits\Log\L0gTrait;
 

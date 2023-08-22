@@ -3,6 +3,8 @@
 namespace App\Traits\Model;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 trait ModelTrait
 {
@@ -136,45 +138,55 @@ trait ModelTrait
     .*======================================================================*/
 
     /**
-     * id
+     * id (int)
      *
-     * @return int
+     * @return Attribute
      */
-    public function getIdAttribute($value): int
+    public function id(): Attribute
     {
-        $rtn = 0;
+        return Attribute::make(
+            get: function ($value) {
+                $rtn = 0;
 
-        if ($this->primaryKey == 'id') {
-            if (!is_null($value)) {
-                $rtn = $value;
-            }
-        } else {
-            if (isset($this[$this->getKeyName()])) {
-                $rtn = $this[$this->getKeyName()];
-            }
-        }
+                if ($this->primaryKey == 'id') {
+                    if (!is_null($value)) {
+                        $rtn = $value;
+                    }
+                } else {
+                    $reflectionClass = new \ReflectionClass($this);
 
-        return $rtn;
+                    if ($reflectionClass->hasProperty($this->getKeyName())) {
+                        $rtn = $reflectionClass->getProperty($this->getKeyName());
+                    }
+                }
+
+                return $rtn;
+            }
+        );
     }
 
     /**
-     * isEmpty
+     * isEmpty (bool)
      *
-     * @return bool
+     * @return Attribute
      */
-    public function getIsEmptyAttribute()
+    public function isEmpty(): Attribute
     {
-        return empty($this->id);
+        return Attribute::make(
+            get: fn ($value) => empty($this->id)
+        );
     }
 
     /**
-     * isNotEmpty
+     * isNotEmpty (bool)
      *
-     * @return bool
+     * @return Attribute
      */
-    public function getIsNotEmptyAttribute()
+    public function isNotEmpty(): Attribute
     {
-        return !$this->isEmpty;
+        return Attribute::make(
+            get: fn ($value) => !$this->isEmpty
+        );
     }
 
     /*======================================================================
@@ -184,36 +196,32 @@ trait ModelTrait
     /**
      * whereDeleted
      */
-    public function scopeWhereDeleted($query)
+    public function scopeWhereDeleted(Builder $query)
     {
         $query->whereNotNull('deleted_at');
-        return $query;
     }
 
     /**
      * whereNotDeleted
      */
-    public function scopeWhereNotDeleted($query)
+    public function scopeWhereNotDeleted(Builder $query)
     {
         $query->whereNull('deleted_at');
-        return $query;
     }
 
     /**
      * sortAsc
      */
-    public function scopeSortAsc($query)
+    public function scopeSortAsc(Builder $query)
     {
-        $query->orderBy('createdAt', 'asc');
-        return $query;
+        $query->orderBy(self::CREATED_AT, 'asc');
     }
 
     /**
      * sortDesc
      */
-    public function scopeSortDesc($query)
+    public function scopeSortDesc(Builder $query)
     {
-        $query->orderBy('createdAt', 'desc');
-        return $query;
+        $query->orderBy('created_at', 'desc');
     }
 }

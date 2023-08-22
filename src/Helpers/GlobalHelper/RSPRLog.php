@@ -1,6 +1,6 @@
 <?php
-use RSPR\LaravelStarter\Facades\L0g;
-use RSPR\LaravelStarter\Facades\SlackLog;
+use RSPR\LaravelStarter\Library\L0g;
+use RSPR\LaravelStarter\Library\SlackLog;
 use RSPR\LaravelStarter\Helpers\LogHelper;
 
 class RSPRLog
