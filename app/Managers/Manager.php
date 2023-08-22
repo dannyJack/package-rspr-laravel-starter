@@ -7,7 +7,10 @@ use App\Responses\Manager\ManagerResponse;
 
 class Manager
 {
-    public Repository $repository;
+    /**
+     * @var Repository
+     */
+    public $repository;
 
     public function response(): ManagerResponse
     {

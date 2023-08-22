@@ -6,7 +6,10 @@ use App\Repositories\UserRepository;
 
 class UserManager extends Manager
 {
-    public UserRepository $repository;
+    /**
+     * @var Repository
+     */
+    public $repository;
 
     public function __construct(UserRepository $repository)
     {
