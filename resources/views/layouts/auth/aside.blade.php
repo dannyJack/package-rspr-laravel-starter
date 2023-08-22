@@ -1,6 +1,6 @@
 <aside class="main-sidebar elevation-4 bg-white">
     <a href="{{-- route('dashboard.index') --}}" class="brand-link">
-        <img src="{{ _vers('images/common/logo.svg') }}" alt="{{ config('app.name') }}" class="brand-image" />
+        <img src="{{ rspr::vers('images/common/logo.svg') }}" alt="{{ config('app.name') }}" class="brand-image" />
         <span class="brand-text font-weight-bold text-blue">{{ config('app.name') }}</span>
     </a>
     <div class="sidebar">

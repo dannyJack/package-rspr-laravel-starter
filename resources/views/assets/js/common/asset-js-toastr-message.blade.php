@@ -7,4 +7,4 @@
         @endif
     @endforeach
 </script>
-<script src="{{ _vers('js/toastr-message.js') }}" defer></script>
+<script src="{{ rspr::vers('js/toastr-message.js') }}" defer></script>
