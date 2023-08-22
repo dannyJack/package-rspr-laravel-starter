@@ -37,7 +37,7 @@ let app = {
 
 app.init();
 
-$(function(){
+$(function () {
     /*======================================================================
      * CONSTANTS
      *======================================================================*/
@@ -55,11 +55,11 @@ $(function(){
      *======================================================================*/
 
     $(document).on('click', '[on-click-loading]', function () {
-        app.loading.show()
+        app.loading.show();
     });
 
     $(document).on('submit', '[on-submit-loading]', function () {
-        app.loading.show()
+        app.loading.show();
     });
 
     $(document).on('click', '#toast-container > .toast', function () {
