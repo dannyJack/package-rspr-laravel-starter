@@ -10,10 +10,14 @@ trait ServiceProviderTrait
     private $pubImagesCommon = [];
     private $pubLangEn = [];
     private $pubLangJa = [];
+    private $pubManager = [];
     private $pubModels = [];
     private $pubPhpcs = [];
     private $pubPublicCss = [];
     private $pubPublicJs = [];
+    private $pubRepository = [];
+    private $pubResponse = [];
+    private $pubResponseCode = [];
     private $pubResourcesCss = [];
     private $pubResourcesJs = [];
     private $pubResourcesViews = [];
@@ -75,6 +79,10 @@ trait ServiceProviderTrait
             $this->customCurrentPath('lang/ja/validation.php') => $this->customProjectPath('lang/ja/validation.php'),
             $this->customCurrentPath('lang/ja/words.php') => $this->customProjectPath('lang/ja/words.php')
         ];
+        $this->pubManager = [
+            $this->customCurrentPath('app/Managers/Manager.php') => $this->customProjectPath('app/Managers/Manager.php'),
+            $this->customCurrentPath('app/Managers/UserManager.php.tmp') => $this->customProjectPath('app/Managers/UserManager.php.tmp')
+        ];
         $this->pubModels = [
             $this->customCurrentPath('app/Traits/Model/ModelTrait.php') => $this->customProjectPath('app/Traits/Model/ModelTrait.php'),
             $this->customCurrentPath('app/Models/Model.php') => $this->customProjectPath('app/Models/Model.php'),
@@ -96,6 +104,22 @@ trait ServiceProviderTrait
         ];
         $this->pubResourcesJs = [
             $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js')
+        ];
+        $this->pubRepository = [
+            $this->customCurrentPath('app/Repositories/Repository.php') => $this->customProjectPath('app/Repositories/Repository.php'),
+            $this->customCurrentPath('app/Repositories/UserRepository.php.tmp') => $this->customProjectPath('app/Repositories/UserRepository.php.tmp')
+        ];
+        $this->pubResponse = [
+            $this->customCurrentPath('app/Responses/Manager/ManagerResponse.php') => $this->customProjectPath('app/Responses/Manager/ManagerResponse.php'),
+            $this->customCurrentPath('app/Responses/Repository/RepositoryResponseCollection.php') => $this->customProjectPath('app/Responses/Repository/RepositoryResponseCollection.php'),
+            $this->customCurrentPath('app/Responses/Repository/RepositoryResponseItem.php') => $this->customProjectPath('app/Responses/Repository/RepositoryResponseItem.php'),
+            $this->customCurrentPath('app/Responses/Repository/RepositoryResponsePagination.php') => $this->customProjectPath('app/Responses/Repository/RepositoryResponsePagination.php'),
+            $this->customCurrentPath('app/Responses/ResponseItem.php') => $this->customProjectPath('app/Responses/ResponseItem.php'),
+            $this->customCurrentPath('app/Responses/ResponseList.php') => $this->customProjectPath('app/Responses/ResponseList.php'),
+        ];
+        $this->pubResponseCode = [
+            $this->customCurrentPath('app/ResponseCodes/ResponseCode.php') => $this->customProjectPath('app/ResponseCodes/ResponseCode.php'),
+            $this->customCurrentPath('app/ResponseCodes/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/UserResponseCode.php.tmp')
         ];
         $this->pubResourcesViews = [
             $this->customCurrentPath('resources/views/layouts/auth/app.blade.php') => $this->customProjectPath('resources/views/layouts/auth/app.blade.php'),

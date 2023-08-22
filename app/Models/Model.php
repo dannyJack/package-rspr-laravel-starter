@@ -14,7 +14,7 @@ class Model extends Md
      */
     protected $appends = [
         'id',
-        'isEmpty',
-        'isNotEmpty',
+        'is_empty',
+        'is_not_empty',
     ];
 }

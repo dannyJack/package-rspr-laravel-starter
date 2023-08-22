@@ -1,0 +1,8 @@
+<?php
+
+namespace App\ResponseCodes;
+
+class UserResponseCode extends ResponseCode
+{
+    const UPDATE_ERROR_NO_USER_FOUND = 201;
+}
