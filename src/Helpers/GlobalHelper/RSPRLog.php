@@ -18,9 +18,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function emergency(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function emergency(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -32,9 +32,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function alert(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function alert(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -46,9 +46,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function critical(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function critical(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -61,9 +61,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function error($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function error(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_ERROR, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_ERROR, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -78,9 +78,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function warning($message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function warning(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_WARNING, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_WARNING, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -92,9 +92,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function notice(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function notice(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -108,9 +108,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function info(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function info(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -122,9 +122,9 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function debug(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function debug(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /*======================================================================
@@ -138,40 +138,40 @@ class RSPRLog
      * @param null|int $debugTraceCount
      * @return void
      */
-    private static function log(string $logType, string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    private static function log(string $logType, string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
         switch ($logType) {
             case LogHelper::TYPE_EMERGENCY:
-                L0g::emergency($message, $params, $debugTraceCount);
-                SlackLog::emergency($message, $params, $debugTraceCount);
+                L0g::emergency($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::emergency($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_ALERT:
-                L0g::alert($message, $params, $debugTraceCount);
-                SlackLog::alert($message, $params, $debugTraceCount);
+                L0g::alert($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::alert($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_CRITICAL:
-                L0g::critical($message, $params, $debugTraceCount);
-                SlackLog::critical($message, $params, $debugTraceCount);
+                L0g::critical($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::critical($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_ERROR:
-                L0g::error($message, $params, $debugTraceCount);
-                SlackLog::error($message, $params, $debugTraceCount);
+                L0g::error($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::error($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_WARNING:
-                L0g::warning($message, $params, $debugTraceCount);
-                SlackLog::warning($message, $params, $debugTraceCount);
+                L0g::warning($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::warning($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_NOTICE:
-                L0g::notice($message, $params, $debugTraceCount);
-                SlackLog::notice($message, $params, $debugTraceCount);
+                L0g::notice($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::notice($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_INFO:
-                L0g::info($message, $params, $debugTraceCount);
-                SlackLog::info($message, $params, $debugTraceCount);
+                L0g::info($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::info($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             case LogHelper::TYPE_DEBUG:
-                L0g::debug($message, $params, $debugTraceCount);
-                SlackLog::debug($message, $params, $debugTraceCount);
+                L0g::debug($message, $params, $debugTraceStartIndex, $debugTraceCount);
+                SlackLog::debug($message, $params, $debugTraceStartIndex, $debugTraceCount);
                 break;
             default:
                 break;

@@ -21,9 +21,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function emergency(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function emergency(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -36,9 +36,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function alert(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function alert(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -51,9 +51,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function critical(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function critical(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -67,9 +67,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function error($message, ...$params)
+    public static function error(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_ERROR, $message, []);
+        self::log(LogHelper::TYPE_ERROR, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -85,9 +85,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function warning($message, ...$params)
+    public static function warning(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_WARNING, $message, []);
+        self::log(LogHelper::TYPE_WARNING, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -100,9 +100,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function notice(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function notice(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -117,9 +117,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function info(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function info(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /**
@@ -132,9 +132,9 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    public static function debug(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    public static function debug(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceCount);
+        self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
 
     /*======================================================================
@@ -148,7 +148,7 @@ trait SlackLogTrait
      * @param null|int $debugTraceCount
      * @return void
      */
-    private static function log(string $logType, string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
+    private static function log(string $logType, string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
     {
         $allowLog = false;
         $channel = config('rsprLog.slack.channel', null);
@@ -159,10 +159,10 @@ trait SlackLogTrait
                 $traceFilePathCharacterLimit = config('rsprLog.slack.traceFilePathCharacterLimit', config('rsprLog.traceFilePathCharacterLimit'));
 
                 if (!isset($params['Project Name']) && !empty(config('rsprLog.projectName', ''))) {
-                    array_unshift($params, 'Project Name', config('rsprLog.projectName', ''));
+                    $params = ['Project Name' => config('rsprLog.projectName', '')] + $params;
                 }
 
-                $message = LogHelper::constructMessage($logType, $message, $params, 1, $debugTraceCount, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
+                $message = LogHelper::constructMessage($logType, $message, $params, $debugTraceStartIndex, $debugTraceCount, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
                 $allowLog = true;
             } else {
                 L0g::error('Slack Log is not working properly.', [
