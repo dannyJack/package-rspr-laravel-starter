@@ -32,10 +32,14 @@ trait ServiceProviderTrait
         $this->publishes($this->pubLangEn + $this->pubLangJa, 'rspr-lang');
         $this->publishes($this->pubLangEn, 'rspr-lang-en');
         $this->publishes($this->pubLangJa, 'rspr-lang-ja');
+        $this->publishes($this->pubManager, 'rspr-manager');
         $this->publishes($this->pubModels, 'rspr-model');
         $this->publishes($this->pubPhpcs, 'rspr-phpcs');
         $this->publishes($this->pubPublicCss, 'rspr-public-css');
         $this->publishes($this->pubPublicJs, 'rspr-public-js');
+        $this->publishes($this->pubRepository, 'rspr-repository');
+        $this->publishes($this->pubResponse, 'rspr-response');
+        $this->publishes($this->pubResponseCode, 'rspr-response-code');
         $this->publishes($this->pubResourcesCss, 'rspr-resources-css');
         $this->publishes($this->pubResourcesJs, 'rspr-resources-js');
         $this->publishes($this->pubResourcesViews, 'rspr-resources-views');
@@ -46,10 +50,14 @@ trait ServiceProviderTrait
             + $this->pubImagesCommon
             + $this->pubLangEn
             + $this->pubLangJa
+            + $this->pubManager
             + $this->pubModels
             + $this->pubPhpcs
             + $this->pubPublicCss
             + $this->pubPublicJs
+            + $this->pubRepository
+            + $this->pubResponse
+            + $this->pubResponseCode
             + $this->pubResourcesCss
             + $this->pubResourcesJs
             + $this->pubResourcesViews
@@ -99,12 +107,6 @@ trait ServiceProviderTrait
             $this->customCurrentPath('public/js/app.js') => $this->customProjectPath('public/js/app.js'),
             $this->customCurrentPath('public/js/toastr-message.js') => $this->customProjectPath('public/js/toastr-message.js')
         ];
-        $this->pubResourcesCss = [
-            $this->customCurrentPath('resources/css/compile.css') => $this->customProjectPath('resources/css/compile.css')
-        ];
-        $this->pubResourcesJs = [
-            $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js')
-        ];
         $this->pubRepository = [
             $this->customCurrentPath('app/Repositories/Repository.php') => $this->customProjectPath('app/Repositories/Repository.php'),
             $this->customCurrentPath('app/Repositories/UserRepository.php.tmp') => $this->customProjectPath('app/Repositories/UserRepository.php.tmp')
@@ -120,6 +122,12 @@ trait ServiceProviderTrait
         $this->pubResponseCode = [
             $this->customCurrentPath('app/ResponseCodes/ResponseCode.php') => $this->customProjectPath('app/ResponseCodes/ResponseCode.php'),
             $this->customCurrentPath('app/ResponseCodes/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/UserResponseCode.php.tmp')
+        ];
+        $this->pubResourcesCss = [
+            $this->customCurrentPath('resources/css/compile.css') => $this->customProjectPath('resources/css/compile.css')
+        ];
+        $this->pubResourcesJs = [
+            $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js')
         ];
         $this->pubResourcesViews = [
             $this->customCurrentPath('resources/views/layouts/auth/app.blade.php') => $this->customProjectPath('resources/views/layouts/auth/app.blade.php'),
