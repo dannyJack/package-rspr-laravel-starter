@@ -2,7 +2,7 @@
 
 namespace RSPR\LaravelStarter\Helpers;
 
-use Illuminate\Support\Library\Blade;
+use Illuminate\Support\Facades\Blade;
 
 class BladeDirectiveHelper
 {
