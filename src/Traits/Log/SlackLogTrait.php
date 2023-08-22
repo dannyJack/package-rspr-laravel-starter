@@ -18,11 +18,12 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    public static function emergency(string $message, ...$params)
+    public static function emergency(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_EMERGENCY, $message, []);
+        self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -32,11 +33,12 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    public static function alert(string $message, ...$params)
+    public static function alert(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_ALERT, $message, []);
+        self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -46,11 +48,12 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    public static function critical(string $message, ...$params)
+    public static function critical(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_CRITICAL, $message, []);
+        self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -61,6 +64,7 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
     public static function error($message, ...$params)
@@ -78,6 +82,7 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
     public static function warning($message, ...$params)
@@ -92,11 +97,12 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    public static function notice(string $message, ...$params)
+    public static function notice(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_NOTICE, $message, []);
+        self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -108,11 +114,12 @@ trait SlackLogTrait
      * send slack log message
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    public static function info(string $message, ...$params)
+    public static function info(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_INFO, $message, []);
+        self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceCount);
     }
 
     /**
@@ -122,11 +129,12 @@ trait SlackLogTrait
      *
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    public static function debug(string $message, ...$params)
+    public static function debug(string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
-        self::log(LogHelper::TYPE_DEBUG, $message, []);
+        self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceCount);
     }
 
     /*======================================================================
@@ -156,9 +164,10 @@ trait SlackLogTrait
      * @param string $logType
      * @param string $message
      * @param object|array|string|int $params
+     * @param null|int $debugTraceCount
      * @return void
      */
-    private static function log(string $logType, string $message, object|array|string|int $params = [])
+    private static function log(string $logType, string $message, object|array|string|int $params = [], null|int $debugTraceCount = null)
     {
         $allowLog = false;
         $channel = config('rsprLog.slack.channel', null);
@@ -168,7 +177,7 @@ trait SlackLogTrait
                 $message = self::preProcessMessage($message);
                 $endLineUnderscoreCount = config('rsprLog.slack.endLineUnderscoreCount', config('rsprLog.endLineUnderscoreCount', 173));
                 $traceFilePathCharacterLimit = config('rsprLog.slack.traceFilePathCharacterLimit', config('rsprLog.traceFilePathCharacterLimit'));
-                $message = LogHelper::constructMessage($logType, $message, $params, 1, null, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
+                $message = LogHelper::constructMessage($logType, $message, $params, 1, $debugTraceCount, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
                 $allowLog = true;
             } else {
                 L0g::error('Slack Log is not working properly.', [
