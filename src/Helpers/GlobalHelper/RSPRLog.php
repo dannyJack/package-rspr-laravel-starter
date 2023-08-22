@@ -18,7 +18,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function emergency(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function emergency(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_EMERGENCY, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -32,7 +32,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function alert(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function alert(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_ALERT, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -46,7 +46,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function critical(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function critical(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_CRITICAL, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -61,7 +61,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function error(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function error(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_ERROR, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -78,7 +78,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function warning(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function warning(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_WARNING, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -92,7 +92,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function notice(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function notice(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_NOTICE, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -108,7 +108,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function info(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function info(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_INFO, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -122,7 +122,7 @@ class RSPRLog
      * @param object|array|string|int $params
      * @return void
      */
-    public static function debug(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    public static function debug(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceStartIndex, $debugTraceCount);
     }
@@ -138,7 +138,7 @@ class RSPRLog
      * @param null|int $debugTraceCount
      * @return void
      */
-    private static function log(string $logType, string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 1, null|int $debugTraceCount = null)
+    private static function log(string $logType, string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         switch ($logType) {
             case LogHelper::TYPE_EMERGENCY:
