@@ -97,7 +97,7 @@ class LogHelper
 
         // Other details
         $ctr = 0;
-        $otherDetailsStr = '';
+        $otherDetailsStr = "\n";
 
         foreach ($params as $id => $value) {
             if ($ctr != 0) {

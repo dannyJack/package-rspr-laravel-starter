@@ -159,7 +159,7 @@ trait SlackLogTrait
                 $traceFilePathCharacterLimit = config('rsprLog.slack.traceFilePathCharacterLimit', config('rsprLog.traceFilePathCharacterLimit'));
 
                 if (!isset($params['Project Name']) && !empty(config('rsprLog.projectName', ''))) {
-                    $params['Project Name'] = config('rsprLog.projectName', '');
+                    array_unshift($params, 'Project Name', config('rsprLog.projectName', ''));
                 }
 
                 $message = LogHelper::constructMessage($logType, $message, $params, 1, $debugTraceCount, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
