@@ -142,25 +142,6 @@ trait SlackLogTrait
      *======================================================================*/
 
     /**
-     * SlackLogTrait::message($message)
-     * pre-processing message
-     *
-     * @param string $message
-     * @return string $rtn
-     */
-    private static function preProcessMessage(string $message)
-    {
-        $rtn = $message;
-
-        if (!empty(config('rsprLog.projectName', ''))) {
-            $str = 'Project Name: ' . config('rsprLog.projectName', '') . "\n";
-            $rtn = $str . $message;
-        }
-
-        return $rtn;
-    }
-
-    /**
      * @param string $logType
      * @param string $message
      * @param object|array|string|int $params
@@ -174,9 +155,13 @@ trait SlackLogTrait
 
         if (config('rsprLog.slack.enable', false)) {
             if (!empty(config('rsprLog.slack.webhookUrl', ''))) {
-                $message = self::preProcessMessage($message);
                 $endLineUnderscoreCount = config('rsprLog.slack.endLineUnderscoreCount', config('rsprLog.endLineUnderscoreCount', 173));
                 $traceFilePathCharacterLimit = config('rsprLog.slack.traceFilePathCharacterLimit', config('rsprLog.traceFilePathCharacterLimit'));
+
+                if (!isset($params['Project Name']) && !empty(config('rsprLog.projectName', ''))) {
+                    $params['Project Name'] = config('rsprLog.projectName', '');
+                }
+
                 $message = LogHelper::constructMessage($logType, $message, $params, 1, $debugTraceCount, $traceFilePathCharacterLimit, $endLineUnderscoreCount);
                 $allowLog = true;
             } else {
