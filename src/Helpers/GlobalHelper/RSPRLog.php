@@ -1,5 +1,6 @@
 <?php
 use RSPR\LaravelStarter\Library\L0g;
+use RSPR\LaravelStarter\Library\Responses\ResponseCheck;
 use RSPR\LaravelStarter\Library\SlackLog;
 use RSPR\LaravelStarter\Helpers\LogHelper;
 
@@ -125,6 +126,12 @@ class RSPRLog
     public static function debug(string $message, object|array|string|int $params = [], int $debugTraceStartIndex = 3, null|int $debugTraceCount = null)
     {
         self::log(LogHelper::TYPE_DEBUG, $message, $params, $debugTraceStartIndex, $debugTraceCount);
+    }
+
+    public static function responseCheck(): ResponseCheck
+    {
+        // return app()->make(ResponseCheck::class);
+        return new ResponseCheck();
     }
 
     /*======================================================================
