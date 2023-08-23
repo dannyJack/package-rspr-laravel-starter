@@ -10,9 +10,9 @@ use Illuminate\Pagination\Paginator;
 
 class RepositoryResponsePagination extends ResponseList
 {
-    public LengthAwarePaginator $data = Collection::make([Model::empty()]);
+    public LengthAwarePaginator $data;
     public bool $success = false;
-    public int $hasData = false;
+    public bool $hasData = false;
 
     public function arrayToPagination(array $items, int $perPage = 5, $page = null, $options = []): LengthAwarePaginator
     {
