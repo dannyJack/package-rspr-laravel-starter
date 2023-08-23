@@ -95,8 +95,8 @@ trait ServiceProviderTrait
             $this->customCurrentPath('config/rsprLog.php') => $this->customProjectPath('config/rsprLog.php')
         ];
         $this->pubControllerTmp = [
-            $this->customCurrentPath('app/Controllers/UserController.php.tmp') => $this->customProjectPath('app/Controllers/UserController.php.tmp'),
-            $this->customCurrentPath('app/Controllers/UserController2.php.tmp') => $this->customProjectPath('app/Controllers/UserController2.php.tmp')
+            $this->customCurrentPath('app/Http/Controllers/UserController.php.tmp') => $this->customProjectPath('app/Http/Controllers/UserController.php.tmp'),
+            $this->customCurrentPath('app/Http/Controllers/UserController2.php.tmp') => $this->customProjectPath('app/Http/Controllers/UserController2.php.tmp')
         ];
         $this->pubEnvTmp = [
             $this->customCurrentPath('root-files/.env.tmp') => $this->customProjectPath('.env.tmp')
