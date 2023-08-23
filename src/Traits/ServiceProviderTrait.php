@@ -121,7 +121,7 @@ trait ServiceProviderTrait
         ];
         $this->pubResponseCode = [
             $this->customCurrentPath('app/ResponseCodes/ResponseCode.php') => $this->customProjectPath('app/ResponseCodes/ResponseCode.php'),
-            $this->customCurrentPath('app/ResponseCodes/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/UserResponseCode.php.tmp')
+            $this->customCurrentPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp')
         ];
         $this->pubResourcesCss = [
             $this->customCurrentPath('resources/css/compile.css') => $this->customProjectPath('resources/css/compile.css')
