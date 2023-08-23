@@ -49,12 +49,12 @@ class Repository
      *
      * @return RepositoryResponseCollection
      */
-    public function acquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponseCollection
+    public function acquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseCollection
     {
         $rtn = $this->responseCollection();
 
         try {
-            $rtn = $this->NTCacquireAll($attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $rtn = $this->NTCacquireAll($attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -75,13 +75,13 @@ class Repository
      *
      * @return RepositoryResponseCollection
      */
-    public function NTCacquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponseCollection
+    public function NTCacquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseCollection
     {
         $rtn = $this->responseCollection();
 
         if (!empty($this->model)) {
             $query = $this->model::query();
-            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
             $rtn->data = $query->get();
             $rtn->success = true;
             $rtn->hasData = $rtn->data->count() > 0;
@@ -90,12 +90,12 @@ class Repository
         return $rtn;
     }
 
-    public function acquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponsePagination
+    public function acquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponsePagination
     {
         $rtn = $this->responsePagination();
 
         try {
-            $rtn = $this->NTCacquireAllReturnPagination($attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $rtn = $this->NTCacquireAllReturnPagination($attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -105,13 +105,13 @@ class Repository
         return $rtn;
     }
 
-    public function NTCacquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponsePagination
+    public function NTCacquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponsePagination
     {
         $rtn = $this->responsePagination();
 
         if (!empty($this->model)) {
             $query = $this->model::query();
-            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
             $rtn->data = $query->paginate(10);
             $rtn->success = true;
             $rtn->hasData = $rtn->data->count() > 0;
@@ -132,12 +132,12 @@ class Repository
      *
      * @return RepositoryResponseItem
      */
-    public function acquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponseItem
+    public function acquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
         try {
-            $rtn = $this->NTCacquire($id, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $rtn = $this->NTCacquire($id, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -163,13 +163,13 @@ class Repository
      *
      * @return RepositoryResponseItem
      */
-    public function NTCacquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponseItem
+    public function NTCacquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
         if (!empty($this->model)) {
             $query = $this->model::where(resolve($this->model)->getKeyName(), $id);
-            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
             $data = $query->first();
             $rtn->success = true;
 
@@ -392,7 +392,7 @@ class Repository
     .* PRIVATE METHODS
     .*======================================================================*/
     
-    private function conditionalQueries(Builder $query, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): Builder
+    private function conditionalQueries(Builder $query, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): Builder
     {
         $query = $query->where(function ($query) use ($attributes) {
             foreach ($attributes as $key => $value) {
@@ -426,6 +426,10 @@ class Repository
 
         if ($withTrashed) {
             $query = $query->withTrashed();
+        }
+
+        if (count($withRelationship) > 0) {
+            $query = $query->with($withRelationship);
         }
 
         return $query;
