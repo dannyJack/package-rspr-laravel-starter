@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Managers\UserManager;
+use App\Models\User;
+use App\ResponseCodes\Manager\UserResponseCode;
+
+class UserController extends Controller
+{
+    protected UserManager $manager;
+
+    public function __construct(UserManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
+    public function index()
+    {
+        $managerResponse = $this->manager->all();
+        return view('page.admin.user.index', $managerResponse->data);
+    }
+
+    public function show(User $user)
+    {
+        $managerResponse = $this->manager->get($user->id);
+        return view('page.admin.user.show', $managerResponse->data);
+    }
+
+    public function store(UserStoreUpdateRequest $request)
+    {
+        $rtn = null;
+        $managerResponse = $this->manager->store();
+
+        if ($managerResponse->isSucces()) {
+            $rtn = redirect()
+                ->route('admin.user.index')
+                ->with('success', __('message.default.success.create', ['name' => __('words.User')]));
+        } elseif ($managerResponse->isErrorDefault()) {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.failed.create', ['name' => __('words.User')]));
+        } elseif ($managerResponse->is(UserResponseCode::STORE_ERROR_INVALID_FIELD)) {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.failed.create', ['name' => __('words.User')]));
+        } else {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.request.invalid'));
+        }
+
+        return $rtn;
+    }
+
+    public function update(User $user, UserStoreUpdateRequest $request)
+    {
+        $managerResponse = $this->manager->update($user->id);
+
+        if ($managerResponse->isSucces()) {
+            $rtn = redirect()
+                ->route('admin.user.index')
+                ->with('success', __('message.default.success.update', ['name' => __('words.User')]));
+        } elseif ($managerResponse->isErrorDefault()) {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.failed.update', ['name' => __('words.User')]));
+        } elseif ($managerResponse->is(UserResponseCode::UPDATE_ERROR_NO_USER_FOUND)) {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.failed.update', ['name' => __('words.User')]));
+        } else {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.request.invalid'));
+        }
+
+        return $rtn;
+    }
+
+    public function destroy(User $user)
+    {
+        $managerResponse = $this->manager->destroy($user->id);
+
+        if ($managerResponse->isSucces()) {
+            $rtn = redirect()
+                ->route('admin.user.index')
+                ->with('success', __('message.default.success.delete', ['name' => __('words.User')]));
+        } elseif ($managerResponse->isErrorDefault()) {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.failed.delete', ['name' => __('words.User')]));
+        } elseif ($managerResponse->is(UserResponseCode::DESTROY_ERROR_NO_USER_FOUND)) {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.failed.delete', ['name' => __('words.User')]));
+        } else {
+            $rtn = redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('message.default.request.invalid'));
+        }
+
+        return $rtn;
+    }
+}

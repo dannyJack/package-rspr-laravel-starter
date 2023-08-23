@@ -47,10 +47,22 @@ class ManagerResponse extends ResponseList
         return $this->responseCode == $responseCode;
     }
 
+    public function setSuccessDefault(): void
+    {
+        $this->success = true;
+        $this->responseCode = ResponseCode::SUCCESS;
+    }
+
     public function setSuccess(int $responseCode): void
     {
         $this->success = true;
         $this->responseCode = $responseCode;
+    }
+
+    public function setErrorDefault(): void
+    {
+        $this->success = false;
+        $this->responseCode = ResponseCode::ERROR;
     }
 
     public function setError(int $responseCode): void

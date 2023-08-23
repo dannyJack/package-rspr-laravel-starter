@@ -6,18 +6,24 @@ trait ServiceProviderTrait
 {
     private static $dirPathRoot = __DIR__ . '/../../';
     private $pubConfig = [];
-    private $pubEnvTemp = [];
+    private $pubControllerTmp = [];
+    private $pubEnvTmp = [];
     private $pubImagesCommon = [];
     private $pubLangEn = [];
     private $pubLangJa = [];
     private $pubManager = [];
-    private $pubModels = [];
+    private $pubManagerTmp = [];
+    private $pubModel = [];
+    private $pubModelTmp = [];
     private $pubPhpcs = [];
     private $pubPublicCss = [];
     private $pubPublicJs = [];
+    private $pubPublicJsTmp = [];
     private $pubRepository = [];
+    private $pubRepositoryTmp = [];
     private $pubResponse = [];
     private $pubResponseCode = [];
+    private $pubResponseCodeTmp = [];
     private $pubResourcesCss = [];
     private $pubResourcesJs = [];
     private $pubResourcesViews = [];
@@ -27,31 +33,38 @@ trait ServiceProviderTrait
     {
         $this->setData();
         $this->publishes($this->pubConfig, 'rspr-config');
-        $this->publishes($this->pubEnvTemp, 'rspr-env-temp');
+        $this->publishes($this->pubControllerTmp, 'rspr-controller');
+        $this->publishes($this->pubEnvTmp, 'rspr-env-temp');
         $this->publishes($this->pubImagesCommon, 'rspr-images-common');
         $this->publishes($this->pubLangEn + $this->pubLangJa, 'rspr-lang');
         $this->publishes($this->pubLangEn, 'rspr-lang-en');
         $this->publishes($this->pubLangJa, 'rspr-lang-ja');
         $this->publishes($this->pubManager, 'rspr-manager');
-        $this->publishes($this->pubModels, 'rspr-model');
+        $this->publishes($this->pubManagerTmp, 'rspr-manager-tmp');
+        $this->publishes($this->pubModel, 'rspr-model');
+        $this->publishes($this->pubModelTmp, 'rspr-model-tmp');
         $this->publishes($this->pubPhpcs, 'rspr-phpcs');
         $this->publishes($this->pubPublicCss, 'rspr-public-css');
         $this->publishes($this->pubPublicJs, 'rspr-public-js');
+        $this->publishes($this->pubPublicJsTmp, 'rspr-public-js-tmp');
         $this->publishes($this->pubRepository, 'rspr-repository');
+        $this->publishes($this->pubRepositoryTmp, 'rspr-repository-tmp');
         $this->publishes($this->pubResponse, 'rspr-response');
         $this->publishes($this->pubResponseCode, 'rspr-response-code');
+        $this->publishes($this->pubResponseCodeTmp, 'rspr-response-code-tmp');
         $this->publishes($this->pubResourcesCss, 'rspr-resources-css');
         $this->publishes($this->pubResourcesJs, 'rspr-resources-js');
         $this->publishes($this->pubResourcesViews, 'rspr-resources-views');
         $this->publishes($this->pubViteConfig, 'rspr-vite-config');
         $this->publishes(
             $this->pubConfig
-            + $this->pubEnvTemp
+            + $this->pubControllerTmp
+            + $this->pubEnvTmp
             + $this->pubImagesCommon
             + $this->pubLangEn
             + $this->pubLangJa
             + $this->pubManager
-            + $this->pubModels
+            + $this->pubModel
             + $this->pubPhpcs
             + $this->pubPublicCss
             + $this->pubPublicJs
@@ -64,6 +77,16 @@ trait ServiceProviderTrait
             + $this->pubViteConfig,
             'rspr-starter'
         );
+        $this->publishes(
+            $this->pubControllerTmp
+            + $this->pubEnvTmp
+            + $this->pubManagerTmp
+            + $this->pubModelTmp
+            + $this->pubPublicJsTmp
+            + $this->pubRepositoryTmp
+            + $this->pubResponseCodeTmp,
+            'rspr-tmp'
+        );
     }
 
     private function setData()
@@ -71,7 +94,11 @@ trait ServiceProviderTrait
         $this->pubConfig = [
             $this->customCurrentPath('config/rsprLog.php') => $this->customProjectPath('config/rsprLog.php')
         ];
-        $this->pubEnvTemp = [
+        $this->pubControllerTmp = [
+            $this->customCurrentPath('app/Controllers/UserController.php.tmp') => $this->customProjectPath('app/Controllers/UserController.php.tmp'),
+            $this->customCurrentPath('app/Controllers/UserController2.php.tmp') => $this->customProjectPath('app/Controllers/UserController2.php.tmp')
+        ];
+        $this->pubEnvTmp = [
             $this->customCurrentPath('root-files/.env.tmp') => $this->customProjectPath('.env.tmp')
         ];
         $this->pubImagesCommon = [
@@ -91,11 +118,18 @@ trait ServiceProviderTrait
             $this->customCurrentPath('app/Managers/Manager.php') => $this->customProjectPath('app/Managers/Manager.php'),
             $this->customCurrentPath('app/Managers/UserManager.php.tmp') => $this->customProjectPath('app/Managers/UserManager.php.tmp')
         ];
-        $this->pubModels = [
+        $this->pubManagerTmp = [
+            $this->customCurrentPath('app/Managers/UserManager.php.tmp') => $this->customProjectPath('app/Managers/UserManager.php.tmp')
+        ];
+        $this->pubModel = [
+            $this->customCurrentPath('app/Models/User.php.tmp') => $this->customProjectPath('app/Models/User.php.tmp'),
             $this->customCurrentPath('app/Traits/Model/ModelTrait.php') => $this->customProjectPath('app/Traits/Model/ModelTrait.php'),
             $this->customCurrentPath('app/Models/Model.php') => $this->customProjectPath('app/Models/Model.php'),
             $this->customCurrentPath('app/Models/ModelAuthenticatable.php') => $this->customProjectPath('app/Models/ModelAuthenticatable.php'),
             // $this->customCurrentPath('app/Models/ModelCompoships.php') => $this->customProjectPath('app/Models/ModelCompoships.php')
+        ];
+        $this->pubModelTmp = [
+            $this->customCurrentPath('app/Models/User.php.tmp') => $this->customProjectPath('app/Models/User.php.tmp')
         ];
         $this->pubPhpcs = [
             $this->customCurrentPath('root-files/phpcs.xml') => $this->customProjectPath('phpcs.xml')
@@ -105,10 +139,17 @@ trait ServiceProviderTrait
         ];
         $this->pubPublicJs = [
             $this->customCurrentPath('public/js/app.js') => $this->customProjectPath('public/js/app.js'),
-            $this->customCurrentPath('public/js/toastr-message.js') => $this->customProjectPath('public/js/toastr-message.js')
+            $this->customCurrentPath('public/js/toastr-message.js') => $this->customProjectPath('public/js/toastr-message.js'),
+            $this->customCurrentPath('public/js/page/user.js.tmp') => $this->customProjectPath('public/js/page/user.js.tmp')
+        ];
+        $this->pubPublicJsTmp = [
+            $this->customCurrentPath('public/js/page/user.js.tmp') => $this->customProjectPath('public/js/page/user.js.tmp')
         ];
         $this->pubRepository = [
             $this->customCurrentPath('app/Repositories/Repository.php') => $this->customProjectPath('app/Repositories/Repository.php'),
+            $this->customCurrentPath('app/Repositories/UserRepository.php.tmp') => $this->customProjectPath('app/Repositories/UserRepository.php.tmp')
+        ];
+        $this->pubRepositoryTmp = [
             $this->customCurrentPath('app/Repositories/UserRepository.php.tmp') => $this->customProjectPath('app/Repositories/UserRepository.php.tmp')
         ];
         $this->pubResponse = [
@@ -121,6 +162,9 @@ trait ServiceProviderTrait
         ];
         $this->pubResponseCode = [
             $this->customCurrentPath('app/ResponseCodes/ResponseCode.php') => $this->customProjectPath('app/ResponseCodes/ResponseCode.php'),
+            $this->customCurrentPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp')
+        ];
+        $this->pubResponseCodeTmp = [
             $this->customCurrentPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp')
         ];
         $this->pubResourcesCss = [

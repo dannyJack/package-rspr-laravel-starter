@@ -2,7 +2,16 @@
 
 namespace App\ResponseCodes\Manager;
 
+use App\ResponseCodes\ResponseCode;
+
 class UserResponseCode extends ResponseCode
 {
+    // STORE
+    const STORE_ERROR_INVALID_FIELD = 201;
+
+    // UPDATE
     const UPDATE_ERROR_NO_USER_FOUND = 201;
+
+    // DESTROY
+    const DESTROY_ERROR_NO_USER_FOUND = 201;
 }
