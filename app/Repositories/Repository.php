@@ -6,6 +6,7 @@ use App\Models\Model;
 use App\Responses\Repository\RepositoryResponseCollection;
 use App\Responses\Repository\RepositoryResponseItem;
 use App\Responses\Repository\RepositoryResponsePagination;
+use Illuminate\Database\Eloquent\Builder;
 
 class Repository
 {
@@ -80,41 +81,38 @@ class Repository
 
         if (!empty($this->model)) {
             $query = $this->model::query();
-            $query = $query->where(function ($query) use ($attributes) {
-                foreach ($attributes as $key => $value) {
-                    if (is_array($value)) {
-                        if (is_numeric($key)) {
-                            $query->where(function ($query) use ($value) {
-                                foreach ($value as $key2 => $value2) {
-                                    $query->where($key2, $value2);
-                                }
-
-                                return $query;
-                            });
-                        } else {
-                            $query->whereIn($key, $value);
-                        }
-                    } else {
-                        $query->where($key, $value);
-                    }
-                }
-
-                return $query;
-            });
-
-            foreach ($exceptAttributes as $key => $value) {
-                $query = $query->where($key, '!=', $value);
-            }
-
-            foreach ($orderByAttributes as $key => $value) {
-                $query = $query->orderBy($key, $value);
-            }
-
-            if ($withTrashed) {
-                $query = $query->withTrashed();
-            }
-
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
             $rtn->data = $query->get();
+            $rtn->success = true;
+            $rtn->hasData = $rtn->data->count() > 0;
+        }
+
+        return $rtn;
+    }
+
+    public function acquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponsePagination
+    {
+        $rtn = $this->responsePagination();
+
+        try {
+            $rtn = $this->NTCacquireAllReturnPagination($attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+        } catch (\Exception $e) {
+            \RSPRLog::error('Exception: ' . $e->getMessage());
+        } catch (\Error $e) {
+            \RSPRLog::error($e->getMessage());
+        }
+
+        return $rtn;
+    }
+
+    public function NTCacquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): RepositoryResponsePagination
+    {
+        $rtn = $this->responsePagination();
+
+        if (!empty($this->model)) {
+            $query = $this->model::query();
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
+            $rtn->data = $query->paginate(10);
             $rtn->success = true;
             $rtn->hasData = $rtn->data->count() > 0;
         }
@@ -171,40 +169,7 @@ class Repository
 
         if (!empty($this->model)) {
             $query = $this->model::where(resolve($this->model)->getKeyName(), $id);
-            $query = $query->where(function ($query) use ($attributes) {
-                foreach ($attributes as $key => $value) {
-                    if (is_array($value)) {
-                        if (is_numeric($key)) {
-                            $query->where(function ($query) use ($value) {
-                                foreach ($value as $key2 => $value2) {
-                                    $query->where($key2, $value2);
-                                }
-
-                                return $query;
-                            });
-                        } else {
-                            $query->whereIn($key, $value);
-                        }
-                    } else {
-                        $query->where($key, $value);
-                    }
-                }
-
-                return $query;
-            });
-
-            foreach ($exceptAttributes as $key => $value) {
-                $query = $query->where($key, '!=', $value);
-            }
-
-            foreach ($orderByAttributes as $key => $value) {
-                $query = $query->orderBy($key, $value);
-            }
-
-            if ($withTrashed) {
-                $query = $query->withTrashed();
-            }
-
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withTrashed);
             $data = $query->first();
             $rtn->success = true;
 
@@ -421,5 +386,48 @@ class Repository
         \RSPRLog::responseCheck()->warning($rtn);
 
         return $rtn;
+    }
+
+    /*======================================================================
+    .* PRIVATE METHODS
+    .*======================================================================*/
+    
+    private function conditionalQueries(Builder $query, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], bool $withTrashed = false): Builder
+    {
+        $query = $query->where(function ($query) use ($attributes) {
+            foreach ($attributes as $key => $value) {
+                if (is_array($value)) {
+                    if (is_numeric($key)) {
+                        $query->where(function ($query) use ($value) {
+                            foreach ($value as $key2 => $value2) {
+                                $query->where($key2, $value2);
+                            }
+
+                            return $query;
+                        });
+                    } else {
+                        $query->whereIn($key, $value);
+                    }
+                } else {
+                    $query->where($key, $value);
+                }
+            }
+
+            return $query;
+        });
+
+        foreach ($exceptAttributes as $key => $value) {
+            $query = $query->where($key, '!=', $value);
+        }
+
+        foreach ($orderByAttributes as $key => $value) {
+            $query = $query->orderBy($key, $value);
+        }
+
+        if ($withTrashed) {
+            $query = $query->withTrashed();
+        }
+
+        return $query;
     }
 }
