@@ -2,7 +2,6 @@
 
 namespace App\Responses\Repository;
 
-use App\Models\Model;
 use App\Responses\ResponseList;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -13,6 +12,11 @@ class RepositoryResponsePagination extends ResponseList
     public LengthAwarePaginator $data;
     public bool $success = false;
     public bool $hasData = false;
+
+    public function __construct()
+    {
+        $this->data = $this->arrayToPagination([]);
+    }
 
     public function arrayToPagination(array $items, int $perPage = 5, $page = null, $options = []): LengthAwarePaginator
     {
