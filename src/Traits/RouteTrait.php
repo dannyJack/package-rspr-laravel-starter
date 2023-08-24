@@ -11,7 +11,7 @@ trait RouteTrait
      * @param string $returnStringIfTrue - the return string if true
      * @return string [$name, 'active', '']
      */
-    public function isRoute(null|string $routeName = null, string $returnStringIfTrue = 'active'): bool
+    public static function isRoute(null|string $routeName = null, string $returnStringIfTrue = 'active'): bool
     {
         $rtn = '';
         $name = \Request::route()->action['as'];
