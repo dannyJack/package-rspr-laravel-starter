@@ -14,7 +14,7 @@ trait RouteTrait
     public static function isRoute(null|string $routeName = null, string $returnStringIfTrue = 'active'): bool
     {
         $rtn = '';
-        $name = \Request::route()->action['as'];
+        $name = \Route::currentRouteName();
 
         if (is_null($routeName)) {
             $rtn = $name;
