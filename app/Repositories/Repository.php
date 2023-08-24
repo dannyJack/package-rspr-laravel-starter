@@ -369,18 +369,12 @@ class Repository
             if ($hasAcquiredData) {
                 $rtn->hasData = true;
                 $rtn->data = $acquiredData;
-                $success = $this->model->delete();
+                $success = $acquiredData->delete();
 
                 if ($success) {
                     $rtn->success = true;
                 }
             }
-        }
-
-        if (!empty($this->model)) {
-            $rtn = $this->NTCadjust($id, [
-                'delFlg' => $this->model::STATUS_DELETED
-            ]);
         }
 
         \RSPRLog::responseCheck()->warning($rtn);
