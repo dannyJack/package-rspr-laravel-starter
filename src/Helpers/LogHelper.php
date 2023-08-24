@@ -74,10 +74,10 @@ class LogHelper
         }
 
         // Backtrace Title
-        if (!empty($debug_trace[$debugTraceStartIndex])) {
-            if (isset($debug_trace[$debugTraceStartIndex]['file'])) {
-                if (!empty($debug_trace[$debugTraceStartIndex]['file']) && !empty($debug_trace[$debugTraceStartIndex]['line'])) {
-                    $_file = explode('/', $debug_trace[$debugTraceStartIndex]['file']);
+        if (!empty($debug_trace[$debugTraceStartIndex + 1])) {
+            if (isset($debug_trace[$debugTraceStartIndex + 1]['file'])) {
+                if (!empty($debug_trace[$debugTraceStartIndex + 1]['file']) && !empty($debug_trace[$debugTraceStartIndex + 1]['line'])) {
+                    $_file = explode('/', $debug_trace[$debugTraceStartIndex + 1]['file']);
                     $_file = end($_file);
                     $logMessage .= "***" . $_file;
 
@@ -85,7 +85,7 @@ class LogHelper
                         $logMessage .= "@" . $debug_trace[2]['function'];
                     }
 
-                    $logMessage .= ':' . $debug_trace[$debugTraceStartIndex]['line'] . '***';
+                    $logMessage .= ':' . $debug_trace[$debugTraceStartIndex + 1]['line'] . '***';
                 }
             }
         }
