@@ -5,6 +5,7 @@ namespace RSPR\LaravelStarter\Traits;
 trait ServiceProviderTrait
 {
     private static $dirPathRoot = __DIR__ . '/../../';
+    private $pubAssetJsToastr = [];
     private $pubConfig = [];
     private $pubControllerTmp = [];
     private $pubEnvTmp = [];
@@ -32,6 +33,7 @@ trait ServiceProviderTrait
     protected function registerPublishers()
     {
         $this->setData();
+        $this->publishes($this->pubAssetJsToastr, 'rspr-asset-js-toastr');
         $this->publishes($this->pubConfig, 'rspr-config');
         $this->publishes($this->pubControllerTmp, 'rspr-controller');
         $this->publishes($this->pubEnvTmp, 'rspr-env-temp');
@@ -91,6 +93,10 @@ trait ServiceProviderTrait
 
     private function setData()
     {
+        $this->pubAssetJsToastr = [
+            $this->customCurrentPath('public/js/toastr-message.js') => $this->customProjectPath('public/js/toastr-message.js'),
+            $this->customCurrentPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php') => $this->customProjectPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php')
+        ];
         $this->pubConfig = [
             $this->customCurrentPath('config/rsprLog.php') => $this->customProjectPath('config/rsprLog.php')
         ];
