@@ -12,6 +12,11 @@ var viteConfig = {
         })
     ],
     server: {
+        // DAN (2023/08/24 20:39) - for self sign certificate (openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem)
+        // https: {
+        //     key: fs.readFileSync('Work\\_virtual\\laradock\\nginx\\ssl\\custom-key.pem'),
+        //     cert: fs.readFileSync('Work\\_virtual\\laradock\\nginx\\ssl\\custom-cert.pem')
+        // },
         host: '0.0.0.0',
         port: process.env.VITE_SERVER_PORT
     }
