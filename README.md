@@ -81,7 +81,7 @@ File versioning method, helps import files with version suffix so updated file w
 rspr::vers('js/app.js')
 ```
 
-oubput: http://127.0.0.1/js/app.js?v=123456
+output: http://127.0.0.1/js/app.js?v=123456
 
 e.g
 
@@ -89,7 +89,13 @@ e.g
 <link href="{{ rspr::vers('css/app.css') }}" rel="stylesheet" />
 ```
 
-output: <link href="http://127.0.0.1/css/app.css?v=123456" rel="stylesheet" />
+output:
+
+```
+<link href="http://127.0.0.1/css/app.css?v=123456" rel="stylesheet" />
+```
+
+Blade route checking.
 
 ```
 rspr::isRoute('user.dashboard')
