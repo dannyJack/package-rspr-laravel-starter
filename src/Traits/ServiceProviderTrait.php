@@ -108,7 +108,7 @@ trait ServiceProviderTrait
     private function setData()
     {
         $this->pubAssetElement = [
-            $this->customCurrentPath('resources/views/assets/element/common/validation-error.blade.php') => $this->customProjectPath('resources/views/assets/element/common/validation-error.blade.php')
+            $this->customCurrentPath('resources/views/assets/element/common/asset-el-validation-error.blade.php') => $this->customProjectPath('resources/views/assets/element/common/asset-el-validation-error.blade.php')
         ];
         $this->pubAssetJsToastr = [
             $this->customCurrentPath('public/js/toastr-message.js') => $this->customProjectPath('public/js/toastr-message.js'),
