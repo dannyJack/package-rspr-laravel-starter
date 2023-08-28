@@ -3,6 +3,7 @@
 namespace RSPR\LaravelStarter\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 
 class MakeManager extends Command
@@ -49,6 +50,14 @@ class MakeManager extends Command
         File::put($fileFullPath, $stub);
 
         $this->info("Class {$name} created successfully.");
+
+        $managerClassPath = 'app/Managers/Manager.php';
+        $managerFullPath = base_path($managerClassPath);
+
+        if (!File::exists($managerFullPath)) {
+            Artisan::call('vendor:publish', ['--tag' => 'rspr-manager']);
+            $this->info('Assets published successfully!');
+        }
     }
 
     protected function getStub($classFolderPath, $pathArray, $name)
