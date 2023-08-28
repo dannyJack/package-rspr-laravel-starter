@@ -33,7 +33,12 @@ class MakeManager extends Command
         $pathArray = $data['pathArray'];
 
         $classFolderPath = 'app/Managers/';
-        $projectClassPathWithArgument = $classFolderPath . implode('/', $pathArray);
+        $projectClassPathWithArgument = $classFolderPath;
+
+        if (count($pathArray) > 0) {
+            $projectClassPathWithArgument .= implode('/', $pathArray) . '/';
+        }
+
         $folderPath  = base_path($projectClassPathWithArgument);
         $fileFullPath = $folderPath . "/{$name}.php";
 
