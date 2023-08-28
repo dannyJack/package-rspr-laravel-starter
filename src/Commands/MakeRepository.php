@@ -32,15 +32,15 @@ class MakeRepository extends Command
         $name = $data['name'];
         $pathArray = $data['pathArray'];
 
-        $classFolderPath = 'app/Repositories/';
+        $classFolderPath = 'app/Repositories';
         $projectClassPathWithArgument = $classFolderPath;
 
         if (count($pathArray) > 0) {
-            $projectClassPathWithArgument .= implode('/', $pathArray) . '/';
+            $projectClassPathWithArgument .= '/' . implode('/', $pathArray) . '/';
         }
 
         $folderPath  = base_path($projectClassPathWithArgument);
-        $fileFullPath = $folderPath . "{$name}.php";
+        $fileFullPath = $folderPath . "/{$name}.php";
 
         if (!File::exists($folderPath)) {
             File::makeDirectory($folderPath, 0755, true);
@@ -69,7 +69,12 @@ class MakeRepository extends Command
 
     protected function getStub($classFolderPath, $pathArray, $name)
     {
-        $classFolderPathWithArgument = $classFolderPath . implode('/', $pathArray);
+        $classFolderPathWithArgument = $classFolderPath;
+
+        if (count($pathArray) > 0) {
+            $classFolderPathWithArgument .= '/' . implode('/', $pathArray);
+        }
+
         $stubContent = <<<EOD
         <?php
 

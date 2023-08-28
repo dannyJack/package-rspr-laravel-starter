@@ -32,15 +32,15 @@ class MakeResponseCode extends Command
         $name = $data['name'];
         $pathArray = $data['pathArray'];
 
-        $classFolderPath = 'app/ResponseCodes/';
+        $classFolderPath = 'app/ResponseCodes';
         $projectClassPathWithArgument = $classFolderPath;
 
         if (count($pathArray) > 0) {
-            $projectClassPathWithArgument .= implode('/', $pathArray) . '/';
+            $projectClassPathWithArgument .= '/' . implode('/', $pathArray);
         }
 
         $folderPath  = base_path($projectClassPathWithArgument);
-        $fileFullPath = $folderPath . "{$name}.php";
+        $fileFullPath = $folderPath . "/{$name}.php";
 
         if (!File::exists($folderPath)) {
             File::makeDirectory($folderPath, 0755, true);
@@ -62,14 +62,19 @@ class MakeResponseCode extends Command
         $parentClassFullPath = base_path($parentClassPath);
 
         if (!File::exists($parentClassFullPath)) {
-            Artisan::call('vendor:publish', ['--tag' => 'rspr-repository-complete']);
-            $this->info('Repository Assets published successfully!');
+            Artisan::call('vendor:publish', ['--tag' => 'rspr-response-code']);
+            $this->info('Response Code Assets published successfully!');
         }
     }
 
     protected function getStub($classFolderPath, $pathArray, $name)
     {
-        $classFolderPathWithArgument = $classFolderPath . implode('/', $pathArray);
+        $classFolderPathWithArgument = $classFolderPath;
+
+        if (count($pathArray) > 0) {
+            $classFolderPathWithArgument .= '/' . implode('/', $pathArray);
+        }
+
         $stubContent = <<<EOD
         <?php
 
@@ -91,11 +96,11 @@ class MakeResponseCode extends Command
             // STORE
             // const STORE_SUCCESS_[DESCRIPTION] = 101;
             // const STORE_ERROR_[DESCRIPTION] = 201;
-        
+
             // UPDATE
             // const UPDATE_SUCCESS_[DESCRIPTION] = 101;
             // const UPDATE_ERROR_[DESCRIPTION] = 201;
-        
+
             // DESTROY
             // const DESTROY_SUCCESS_[DESCRIPTION] = 101;
             // const DESTROY_ERROR_[DESCRIPTION] = 201;
