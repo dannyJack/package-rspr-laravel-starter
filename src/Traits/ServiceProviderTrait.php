@@ -13,6 +13,7 @@ trait ServiceProviderTrait
     private $pubLangEn = [];
     private $pubLangJa = [];
     private $pubManager = [];
+    private $pubManagerComplete = [];
     private $pubManagerTmp = [];
     private $pubModel = [];
     private $pubModelTmp = [];
@@ -21,7 +22,12 @@ trait ServiceProviderTrait
     private $pubPublicJs = [];
     private $pubPublicJsTmp = [];
     private $pubRepository = [];
+    private $pubRepositoryComplete = [];
     private $pubRepositoryTmp = [];
+    private $pubResponseOnlyManager = [];
+    private $pubResponseOnlyRepository = [];
+    private $pubResponseOnlyChild = [];
+    private $pubResponseOnlyParent = [];
     private $pubResponse = [];
     private $pubResponseCode = [];
     private $pubResponseCodeTmp = [];
@@ -42,6 +48,7 @@ trait ServiceProviderTrait
         $this->publishes($this->pubLangEn, 'rspr-lang-en');
         $this->publishes($this->pubLangJa, 'rspr-lang-ja');
         $this->publishes($this->pubManager, 'rspr-manager');
+        $this->publishes($this->pubManagerComplete, 'rspr-manager-complete');
         $this->publishes($this->pubManagerTmp, 'rspr-manager-tmp');
         $this->publishes($this->pubModel, 'rspr-model');
         $this->publishes($this->pubModelTmp, 'rspr-model-tmp');
@@ -50,7 +57,12 @@ trait ServiceProviderTrait
         $this->publishes($this->pubPublicJs, 'rspr-public-js');
         $this->publishes($this->pubPublicJsTmp, 'rspr-public-js-tmp');
         $this->publishes($this->pubRepository, 'rspr-repository');
+        $this->publishes($this->pubRepositoryComplete, 'rspr-repository-complete');
         $this->publishes($this->pubRepositoryTmp, 'rspr-repository-tmp');
+        $this->publishes($this->pubResponseOnlyManager, 'rspr-response-manager');
+        $this->publishes($this->pubResponseOnlyRepository, 'rspr-response-repository');
+        $this->publishes($this->pubResponseOnlyChild, 'rspr-response-child');
+        $this->publishes($this->pubResponseOnlyParent, 'rspr-response-parent');
         $this->publishes($this->pubResponse, 'rspr-response');
         $this->publishes($this->pubResponseCode, 'rspr-response-code');
         $this->publishes($this->pubResponseCodeTmp, 'rspr-response-code-tmp');
@@ -158,14 +170,24 @@ trait ServiceProviderTrait
         $this->pubRepositoryTmp = [
             $this->customCurrentPath('app/Repositories/UserRepository.php.tmp') => $this->customProjectPath('app/Repositories/UserRepository.php.tmp')
         ];
-        $this->pubResponse = [
-            $this->customCurrentPath('app/Responses/Manager/ManagerResponse.php') => $this->customProjectPath('app/Responses/Manager/ManagerResponse.php'),
+        $this->pubResponseOnlyManager = [
+            $this->customCurrentPath('app/Responses/Manager/ManagerResponse.php') => $this->customProjectPath('app/Responses/Manager/ManagerResponse.php')
+        ];
+        $this->pubResponseOnlyRepository = [
             $this->customCurrentPath('app/Responses/Repository/RepositoryResponseCollection.php') => $this->customProjectPath('app/Responses/Repository/RepositoryResponseCollection.php'),
             $this->customCurrentPath('app/Responses/Repository/RepositoryResponseItem.php') => $this->customProjectPath('app/Responses/Repository/RepositoryResponseItem.php'),
             $this->customCurrentPath('app/Responses/Repository/RepositoryResponsePagination.php') => $this->customProjectPath('app/Responses/Repository/RepositoryResponsePagination.php'),
+        ];
+        $this->pubResponseOnlyChild = array_merge([
+            //
+        ], $this->pubResponseOnlyManager, $this->pubResponseOnlyRepository);
+        $this->pubResponseOnlyParent = [
             $this->customCurrentPath('app/Responses/ResponseItem.php') => $this->customProjectPath('app/Responses/ResponseItem.php'),
             $this->customCurrentPath('app/Responses/ResponseList.php') => $this->customProjectPath('app/Responses/ResponseList.php'),
         ];
+        $this->pubResponse = array_merge([
+            //
+        ], $this->pubResponseOnlyChild, $this->pubResponseOnlyParent);
         $this->pubResponseCode = [
             $this->customCurrentPath('app/ResponseCodes/ResponseCode.php') => $this->customProjectPath('app/ResponseCodes/ResponseCode.php'),
             $this->customCurrentPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp')
@@ -192,6 +214,12 @@ trait ServiceProviderTrait
         $this->pubViteConfig = [
             $this->customCurrentPath('root-files/vite.config.js') => $this->customProjectPath('vite.config.js')
         ];
+        $this->pubManagerComplete = array_merge([
+            //
+        ], $this->pubManager, $this->pubResponseOnlyManager, $this->pubResponseOnlyParent);
+        $this->pubRepositoryComplete = array_merge([
+            //
+        ], $this->pubRepository, $this->pubResponseOnlyRepository, $this->pubResponseOnlyParent);
     }
 
     private function customCurrentPath(string $extendedPath)

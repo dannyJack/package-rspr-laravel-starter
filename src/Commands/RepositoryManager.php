@@ -32,7 +32,7 @@ class MakeManager extends Command
         $name = $data['name'];
         $pathArray = $data['pathArray'];
 
-        $classFolderPath = 'app/Managers/';
+        $classFolderPath = 'app/Repositories/';
         $projectClassPathWithArgument = $classFolderPath . implode('/', $pathArray);
         $folderPath  = base_path($projectClassPathWithArgument);
         $fileFullPath = $folderPath . "/{$name}.php";
@@ -53,12 +53,12 @@ class MakeManager extends Command
 
         $this->info("Class {$classPath} created successfully.");
 
-        $parentClassPath = 'app/Managers/Manager.php';
+        $parentClassPath = 'app/Repositories/Repository.php';
         $parentClassFullPath = base_path($parentClassPath);
 
         if (!File::exists($parentClassFullPath)) {
-            Artisan::call('vendor:publish', ['--tag' => 'rspr-manager-complete']);
-            $this->info('Manager Assets published successfully!');
+            Artisan::call('vendor:publish', ['--tag' => 'rspr-repository-complete']);
+            $this->info('Repository Assets published successfully!');
         }
     }
 
@@ -73,7 +73,7 @@ class MakeManager extends Command
 
         if (count($pathArray) > 0) {
             $stubContent .= <<<EOD
-            use {classFolderPath}Manager;
+            use {classFolderPath}Repository;
 
             EOD;
             $stubContent = str_replace('{classFolderPath}', str_replace('/', '\\', $classFolderPath), $stubContent);
@@ -81,17 +81,9 @@ class MakeManager extends Command
 
         $stubContent .= <<<EOD
 
-        class {className} extends Manager
+        class {className} extends Repository
         {
-            /**
-             * @var [ModelName]Repository
-             */
-            // public [ModelName]Repository \$repository;
-
-            public function __construct(/** [ModelName]Repository \$repository **/)
-            {
-                // \$this->repository = \$repository;
-            }
+            // public \$model = [Mode]::class;
         }\n
         EOD;
         $projectClassPathWithArgument = str_replace('/', '\\', $classFolderPathWithArgument);
