@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use RSPR\LaravelStarter\Services\FileMaker;
 
-class MakeManager extends Command
+class MakeRepository extends Command
 {
     /**
      * The name and signature of the console command.
