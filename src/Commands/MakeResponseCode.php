@@ -83,7 +83,7 @@ class MakeResponseCode extends Command
 
         if (count($pathArray) > 0) {
             $stubContent .= <<<EOD
-            use {classFolderPath}/ResponseCode;
+            use {classFolderPath}\ResponseCode;
 
             EOD;
             $stubContent = str_replace('{classFolderPath}', ucfirst(str_replace('/', '\\', $classFolderPath)), $stubContent);

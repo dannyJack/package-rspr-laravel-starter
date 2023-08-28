@@ -83,7 +83,7 @@ class MakeRepository extends Command
 
         if (count($pathArray) > 0) {
             $stubContent .= <<<EOD
-            use {classFolderPath}/Repository;
+            use {classFolderPath}\Repository;
 
             EOD;
             $stubContent = str_replace('{classFolderPath}', ucfirst(str_replace('/', '\\', $classFolderPath)), $stubContent);
