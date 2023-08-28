@@ -216,7 +216,7 @@ trait ServiceProviderTrait
         ];
         $this->pubManagerComplete = array_merge([
             //
-        ], $this->pubManager, $this->pubResponseOnlyManager, $this->pubResponseOnlyParent);
+        ], $this->pubManager, $this->pubResponseOnlyManager, $this->pubResponseOnlyParent, $this->pubResponseCode);
         $this->pubRepositoryComplete = array_merge([
             //
         ], $this->pubRepository, $this->pubResponseOnlyRepository, $this->pubResponseOnlyParent);
