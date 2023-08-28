@@ -5,6 +5,8 @@ namespace RSPR\LaravelStarter;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as SP;
 use RSPR\LaravelStarter\Commands\MakeManager;
+use RSPR\LaravelStarter\Commands\MakeRepository;
+use RSPR\LaravelStarter\Commands\MakeResponseCode;
 use RSPR\LaravelStarter\Library\L0g;
 use RSPR\LaravelStarter\Helpers\BladeDirectiveHelper;
 use RSPR\LaravelStarter\Library\SlackLog;
@@ -24,7 +26,9 @@ class ServiceProvider extends SP
         
         if ($this->app->runningInConsole()) {
             $this->commands([
-                MakeManager::class
+                MakeManager::class,
+                MakeRepository::class,
+                MakeResponseCode::class
             ]);
         }
     }

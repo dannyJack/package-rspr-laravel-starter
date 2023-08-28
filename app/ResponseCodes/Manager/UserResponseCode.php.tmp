@@ -2,9 +2,9 @@
 
 namespace App\ResponseCodes\Manager;
 
-// use App\ResponseCodes\ResponseCode;
+use App\ResponseCodes\ResponseCode;
 
-class UserResponseCode // extends ResponseCode
+class UserResponseCode extends ResponseCode
 {
     // STORE
     const STORE_ERROR_INVALID_FIELD = 201;

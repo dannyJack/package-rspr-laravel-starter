@@ -76,7 +76,7 @@ class MakeManager extends Command
             use {classFolderPath}Manager;
 
             EOD;
-            $stubContent = str_replace('{classFolderPath}', str_replace('/', '\\', $classFolderPath), $stubContent);
+            $stubContent = str_replace('{classFolderPath}', ucfirst(str_replace('/', '\\', $classFolderPath)), $stubContent);
         }
 
         $stubContent .= <<<EOD

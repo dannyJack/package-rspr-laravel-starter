@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use RSPR\LaravelStarter\Services\FileMaker;
 
-class MakeRepository extends Command
+class MakeResponseCode extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:rspr-repository {name : class repository name}';
+    protected $signature = 'make:rspr-response-code {name : class response code name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new repository class';
+    protected $description = 'Create a new response code class';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ class MakeRepository extends Command
         $name = $data['name'];
         $pathArray = $data['pathArray'];
 
-        $classFolderPath = 'app/Repositories/';
+        $classFolderPath = 'app/ResponseCodes/';
         $projectClassPathWithArgument = $classFolderPath . implode('/', $pathArray);
         $folderPath  = base_path($projectClassPathWithArgument);
         $fileFullPath = $folderPath . "/{$name}.php";
@@ -73,7 +73,7 @@ class MakeRepository extends Command
 
         if (count($pathArray) > 0) {
             $stubContent .= <<<EOD
-            use {classFolderPath}Repository;
+            use {classFolderPath}ResponseCode;
 
             EOD;
             $stubContent = str_replace('{classFolderPath}', ucfirst(str_replace('/', '\\', $classFolderPath)), $stubContent);
@@ -81,9 +81,19 @@ class MakeRepository extends Command
 
         $stubContent .= <<<EOD
 
-        class {className} extends Repository
+        class {className} extends ResponseCode
         {
-            // public \$model = [Mode]::class;
+            // STORE
+            // const STORE_SUCCESS_[DESCRIPTION] = 101;
+            // const STORE_ERROR_[DESCRIPTION] = 201;
+        
+            // UPDATE
+            // const UPDATE_SUCCESS_[DESCRIPTION] = 101;
+            // const UPDATE_ERROR_[DESCRIPTION] = 201;
+        
+            // DESTROY
+            // const DESTROY_SUCCESS_[DESCRIPTION] = 101;
+            // const DESTROY_ERROR_[DESCRIPTION] = 201;
         }\n
         EOD;
         $projectClassPathWithArgument = str_replace('/', '\\', $classFolderPathWithArgument);
