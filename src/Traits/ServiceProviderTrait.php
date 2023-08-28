@@ -35,6 +35,7 @@ trait ServiceProviderTrait
     private $pubResourcesCss = [];
     private $pubResourcesJs = [];
     private $pubResourcesViews = [];
+    private $pubService = [];
     private $pubViteConfig = [];
 
     protected function registerPublishers()
@@ -71,6 +72,7 @@ trait ServiceProviderTrait
         $this->publishes($this->pubResourcesCss, 'rspr-resources-css');
         $this->publishes($this->pubResourcesJs, 'rspr-resources-js');
         $this->publishes($this->pubResourcesViews, 'rspr-resources-views');
+        $this->publishes($this->pubService, 'rspr-service');
         $this->publishes($this->pubViteConfig, 'rspr-vite-config');
         $this->publishes(
             $this->pubConfig
@@ -90,6 +92,7 @@ trait ServiceProviderTrait
             + $this->pubResourcesCss
             + $this->pubResourcesJs
             + $this->pubResourcesViews
+            + $this->pubService
             + $this->pubViteConfig,
             'rspr-starter'
         );
@@ -216,6 +219,9 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/views/pages/auth/dashboard/index.blade.php.txt') => $this->customProjectPath('resources/views/pages/auth/dashboard/index.blade.php'),
             $this->customCurrentPath('resources/views/pages/guest/auth/login.blade.php.txt') => $this->customProjectPath('resources/views/pages/guest/auth/login.blade.php')
         ], $this->pubAssetElement);
+        $this->pubService = [
+            $this->customCurrentPath('app/Services/GlobalService.php.txt') => $this->customProjectPath('app/Services/GlobalService.php')
+        ];
         $this->pubViteConfig = [
             $this->customCurrentPath('root-files/vite.config.js') => $this->customProjectPath('vite.config.js')
         ];

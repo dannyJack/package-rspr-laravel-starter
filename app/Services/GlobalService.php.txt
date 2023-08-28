@@ -1,0 +1,11 @@
+<?php
+
+// use App\Models\[Model];
+
+// class [projectname]
+// {
+//     public function m[Model](): [Model]]
+//     {
+//         return resolve([Model]::class);
+//     }
+// }
