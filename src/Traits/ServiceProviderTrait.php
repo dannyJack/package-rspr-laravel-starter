@@ -5,6 +5,7 @@ namespace RSPR\LaravelStarter\Traits;
 trait ServiceProviderTrait
 {
     private static $dirPathRoot = __DIR__ . '/../../';
+    private $pubAssetElement = [];
     private $pubAssetJsToastr = [];
     private $pubConfig = [];
     private $pubControllerTmp = [];
@@ -39,6 +40,7 @@ trait ServiceProviderTrait
     protected function registerPublishers()
     {
         $this->setData();
+        $this->publishes($this->pubAssetElement, 'rspr-asset-element');
         $this->publishes($this->pubAssetJsToastr, 'rspr-asset-js-toastr');
         $this->publishes($this->pubConfig, 'rspr-config');
         $this->publishes($this->pubControllerTmp, 'rspr-controller');
@@ -105,6 +107,9 @@ trait ServiceProviderTrait
 
     private function setData()
     {
+        $this->pubAssetElement = [
+            $this->customCurrentPath('resources/views/assets/element/common/validation-error.blade.php') => $this->customProjectPath('resources/views/assets/element/common/validation-error.blade.php')
+        ];
         $this->pubAssetJsToastr = [
             $this->customCurrentPath('public/js/toastr-message.js') => $this->customProjectPath('public/js/toastr-message.js'),
             $this->customCurrentPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php.txt') => $this->customProjectPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php')
@@ -201,7 +206,7 @@ trait ServiceProviderTrait
         $this->pubResourcesJs = [
             $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js')
         ];
-        $this->pubResourcesViews = [
+        $this->pubResourcesViews = array_merge([
             $this->customCurrentPath('resources/views/layouts/auth/app.blade.php.txt') => $this->customProjectPath('resources/views/layouts/auth/app.blade.php'),
             $this->customCurrentPath('resources/views/layouts/auth/aside.blade.php.txt') => $this->customProjectPath('resources/views/layouts/auth/aside.blade.php'),
             $this->customCurrentPath('resources/views/layouts/auth/content-header.blade.php.txt') => $this->customProjectPath('resources/views/layouts/auth/content-header.blade.php'),
@@ -210,7 +215,7 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php.txt') => $this->customProjectPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php'),
             $this->customCurrentPath('resources/views/pages/auth/dashboard/index.blade.php.txt') => $this->customProjectPath('resources/views/pages/auth/dashboard/index.blade.php'),
             $this->customCurrentPath('resources/views/pages/guest/auth/login.blade.php.txt') => $this->customProjectPath('resources/views/pages/guest/auth/login.blade.php')
-        ];
+        ], $this->pubAssetElement);
         $this->pubViteConfig = [
             $this->customCurrentPath('root-files/vite.config.js') => $this->customProjectPath('vite.config.js')
         ];
