@@ -40,7 +40,7 @@ class MakeResponseCode extends Command
         }
 
         $folderPath  = base_path($projectClassPathWithArgument);
-        $fileFullPath = $folderPath . "/{$name}.php";
+        $fileFullPath = $folderPath . "{$name}.php";
 
         if (!File::exists($folderPath)) {
             File::makeDirectory($folderPath, 0755, true);
