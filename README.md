@@ -13,19 +13,110 @@ download the package via composer
 
 `composer require rspr/laravel-starter`
 
-## Files, Classes and Methods
+## Publishers
 
-### Files
+```
+php artisan vendor:publish --tag=rspr-asset-js-toastr
+php artisan vendor:publish --tag=rspr-config
+php artisan vendor:publish --tag=rspr-controller
+php artisan vendor:publish --tag=rspr-env-temp
+php artisan vendor:publish --tag=rspr-images-common
+php artisan vendor:publish --tag=rspr-lang
+php artisan vendor:publish --tag=rspr-lang-en
+php artisan vendor:publish --tag=rspr-lang-ja
+php artisan vendor:publish --tag=rspr-manager
+php artisan vendor:publish --tag=rspr-manager-complete
+php artisan vendor:publish --tag=rspr-manager-tmp
+php artisan vendor:publish --tag=rspr-model
+php artisan vendor:publish --tag=rspr-model-tmp
+php artisan vendor:publish --tag=rspr-phpcs
+php artisan vendor:publish --tag=rspr-public-css
+php artisan vendor:publish --tag=rspr-public-js
+php artisan vendor:publish --tag=rspr-public-js-tmp
+php artisan vendor:publish --tag=rspr-repository
+php artisan vendor:publish --tag=rspr-repository-complete
+php artisan vendor:publish --tag=rspr-repository-tmp
+php artisan vendor:publish --tag=rspr-response-manager
+php artisan vendor:publish --tag=rspr-response-repository
+php artisan vendor:publish --tag=rspr-response-child
+php artisan vendor:publish --tag=rspr-response-parent
+php artisan vendor:publish --tag=rspr-response
+php artisan vendor:publish --tag=rspr-response-code
+php artisan vendor:publish --tag=rspr-response-code-tmp
+php artisan vendor:publish --tag=rspr-resources-css
+php artisan vendor:publish --tag=rspr-resources-js
+php artisan vendor:publish --tag=rspr-resources-views
+php artisan vendor:publish --tag=rspr-vite-config
+```
 
-* Library/L0g.php - Custom message logs, uses the original laravel logging class \Log::class, this helps the logging message to be more readable
-* Library/SlackLog.php - Slack log message which use webhooks from slack API, this helps the logging message to be more readable
+for starter files
 
-### Methods
+```
+php artisan vendor:publish --tag=rspr-starter
+```
+
+for sample temporary files
+
+```
+php artisan vendor:publish --tag=rspr-tmp
+```
+
+## Global classes
+
+- rspr - usefull in blade template. Contains helpfull method like "vers" and "isRoute"
+- RSPRL0g - same as \Log::class but with a better logging message output.
+- RSPRSlackLog - slack log messaging/notification with an implementation of RSPRL0g better logging message output.
+- RSPRLog - combined RSPRL0g and RSPRSlackLog implementation which output logs in the logger file and send message through slack webhook.
+
+## Pre-defined Alias classes
+
+* L0g.php - Custom message logs, uses the original laravel logging class \Log::class, this helps the logging message to be more readable
+* SlackLog.php - Slack log message which use webhooks from slack API, this helps the logging message to be more readable
+
+## Details
 
 File versioning method, helps import files with version suffix so updated file will be imported and not the cache files
 
 ```
 rspr::vers('js/app.js')
+```
+
+oubput: http://127.0.0.1/js/app.js?v=123456
+
+e.g
+
+```
+<link href="{{ rspr::vers('css/app.css') }}" rel="stylesheet" />
+```
+
+output: <link href="http://127.0.0.1/css/app.css?v=123456" rel="stylesheet" />
+
+```
+rspr::isRoute('user.dashboard')
+```
+
+output: 'active'
+
+e.g
+
+```
+<li class="nav-item">
+	<a href="{{ route('user.dashboard') }}" class="nav-link{{ rspr::isRoute('user.dashboard') }}">
+		<i class="nav-icon fas fa-tachometer-alt half"></i>
+		<p>{{ __('words.Dashboard') }}</p>
+	</a>
+</li>
+```
+
+output:
+
+```
+<li class="nav-item">
+	<a href="http://127.0.0.1/dashboard" class="nav-link active">
+		<i class="nav-icon fas fa-tachometer-alt half"></i>
+		<p>Dashboard</p>
+	</a>
+</li>
 ```
 
 Message Log, uses the default \Log::class of the laravel but with more readability.
@@ -82,30 +173,6 @@ RSPRLog::warning('this is an alert message');
 RSPRLog::notice('this is an alert message');
 RSPRLog::info('this is an alert message');
 RSPRLog::debug('this is an alert message');
-```
-
-## Publishers
-
-```
-php artisan vendor:publish --tag=rspr-config
-php artisan vendor:publish --tag=rspr-env-temp
-php artisan vendor:publish --tag=rspr-images-common
-php artisan vendor:publish --tag=rspr-lang
-php artisan vendor:publish --tag=rspr-lang-en
-php artisan vendor:publish --tag=rspr-lang-ja
-php artisan vendor:publish --tag=rspr-manager
-php artisan vendor:publish --tag=rspr-model
-php artisan vendor:publish --tag=rspr-phpcs
-php artisan vendor:publish --tag=rspr-public-css
-php artisan vendor:publish --tag=rspr-public-js
-php artisan vendor:publish --tag=rspr-repository
-php artisan vendor:publish --tag=rspr-response
-php artisan vendor:publish --tag=rspr-response-code
-php artisan vendor:publish --tag=rspr-resources-css
-php artisan vendor:publish --tag=rspr-resources-js
-php artisan vendor:publish --tag=rspr-resources-views
-php artisan vendor:publish --tag=rspr-vite-config
-php artisan vendor:publish --tag=rspr-starter
 ```
 
 ## License
