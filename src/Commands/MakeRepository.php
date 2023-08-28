@@ -83,7 +83,7 @@ class MakeRepository extends Command
 
         if (count($pathArray) > 0) {
             $stubContent .= <<<EOD
-            use {classFolderPath}Repository;
+            use {classFolderPath}/Repository;
 
             EOD;
             $stubContent = str_replace('{classFolderPath}', ucfirst(str_replace('/', '\\', $classFolderPath)), $stubContent);
@@ -96,7 +96,7 @@ class MakeRepository extends Command
             // public \$model = [Mode]::class;
         }\n
         EOD;
-        $projectClassPathWithArgument = str_replace('/', '\\', $classFolderPathWithArgument);
+        $projectClassPathWithArgument = ucfirst(str_replace('/', '\\', $classFolderPathWithArgument));
         $stubContent = str_replace('{namespace}', $projectClassPathWithArgument, $stubContent);
         $rtn = str_replace('{className}', $name, $stubContent);
 

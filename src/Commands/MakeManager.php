@@ -83,7 +83,7 @@ class MakeManager extends Command
 
         if (count($pathArray) > 0) {
             $stubContent .= <<<EOD
-            use {classFolderPath}Manager;
+            use {classFolderPath}/Manager;
 
             EOD;
             $stubContent = str_replace('{classFolderPath}', ucfirst(str_replace('/', '\\', $classFolderPath)), $stubContent);
@@ -104,7 +104,7 @@ class MakeManager extends Command
             }
         }\n
         EOD;
-        $projectClassPathWithArgument = str_replace('/', '\\', $classFolderPathWithArgument);
+        $projectClassPathWithArgument = ucfirst(str_replace('/', '\\', $classFolderPathWithArgument));
         $stubContent = str_replace('{namespace}', $projectClassPathWithArgument, $stubContent);
         $rtn = str_replace('{className}', $name, $stubContent);
 
