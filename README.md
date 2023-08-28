@@ -126,17 +126,16 @@ output:
 ```
 
 Message Log, uses the default \Log::class of the laravel but with more readability.
-- can pass a 2nd array parameter
 
 ```
-RSPRL0g::emergency('this is an emergency message');
-RSPRL0g::alert('this is an alert message');
-RSPRL0g::critical('this is an alert message');
-RSPRL0g::error('this is an alert message');
-RSPRL0g::warning('this is an alert message');
-RSPRL0g::notice('this is an alert message');
-RSPRL0g::info('this is an alert message');
-RSPRL0g::debug('this is an alert message');
+RSPRL0g::emergency('this is an emergency message', []);
+RSPRL0g::alert('this is an alert message', []);
+RSPRL0g::critical('this is an alert message', []);
+RSPRL0g::error('this is an alert message', []);
+RSPRL0g::warning('this is an alert message', []);
+RSPRL0g::notice('this is an alert message', []);
+RSPRL0g::info('this is an alert message', []);
+RSPRL0g::debug('this is an alert message', []);
 ```
 
 Sample output:
