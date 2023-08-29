@@ -33,7 +33,7 @@ class UserController extends Controller
         $rtn = null;
         $managerResponse = $this->manager->store();
 
-        if ($managerResponse->isSucces()) {
+        if ($managerResponse->isSuccess()) {
             $rtn = redirect()
                 ->route('admin.user.index')
                 ->with('success', __('message.default.success.create', ['name' => __('words.User')]));
@@ -61,7 +61,7 @@ class UserController extends Controller
     {
         $managerResponse = $this->manager->update($user->id);
 
-        if ($managerResponse->isSucces()) {
+        if ($managerResponse->isSuccess()) {
             $rtn = redirect()
                 ->route('admin.user.index')
                 ->with('success', __('message.default.success.update', ['name' => __('words.User')]));
@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $managerResponse = $this->manager->destroy($user->id);
 
-        if ($managerResponse->isSucces()) {
+        if ($managerResponse->isSuccess()) {
             $rtn = redirect()
                 ->route('admin.user.index')
                 ->with('success', __('message.default.success.delete', ['name' => __('words.User')]));

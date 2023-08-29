@@ -22,7 +22,7 @@ class ManagerResponse extends ResponseList
         $this->responseCode = ResponseCode::NONE;
     }
 
-    public function isSucces(): bool
+    public function isSuccess(): bool
     {
         return $this->success;
     }
