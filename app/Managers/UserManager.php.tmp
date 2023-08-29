@@ -71,7 +71,7 @@ class UserManager extends Manager
                     $rtn->data['data'] = $addResponse->data;
                     $rtn->setSuccessDefault();
                 } else {
-                    $rtn->setError(UserResponseCode::STORE_ERROR_INVALID_FIELD);
+                    $rtn->setErrorDefault();
                 }
             } else {
                 $rtn->setErrorDefault();
