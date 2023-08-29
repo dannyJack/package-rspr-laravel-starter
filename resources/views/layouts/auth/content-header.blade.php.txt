@@ -1,4 +1,4 @@
-@if(trim($__env->yieldContent('contentHeader')) || trim($__env->yieldContent('contentHeaderTitle')))
+@if(View::hasSection('contentHeader') || View::hasSection('contentHeaderTitle'))
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
