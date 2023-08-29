@@ -296,7 +296,7 @@ class Repository
             if ($hasAcquiredData) {
                 $rtn->hasData = true;
                 $rtn->data = $acquiredData;
-                $success = $this->model->update($attributes);
+                $success = $acquiredData->update($attributes);
 
                 if ($success) {
                     $rtn->success = true;
