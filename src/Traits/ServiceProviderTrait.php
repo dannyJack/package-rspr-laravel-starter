@@ -220,7 +220,7 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/views/pages/guest/auth/login.blade.php.txt') => $this->customProjectPath('resources/views/pages/guest/auth/login.blade.php')
         ], $this->pubAssetElement);
         $this->pubService = [
-            $this->customCurrentPath('app/Services/GlobalService.php.txt') => $this->customProjectPath('app/Services/GlobalService.php')
+            $this->customCurrentPath('app/Services/GlobalProjectService.php.txt') => $this->customProjectPath('app/Services/GlobalProjectService.php')
         ];
         $this->pubViteConfig = [
             $this->customCurrentPath('root-files/vite.config.js') => $this->customProjectPath('vite.config.js')
