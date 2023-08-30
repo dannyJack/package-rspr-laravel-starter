@@ -22,10 +22,9 @@ class UserManager extends Manager
     {
         $rtn = $this->response();
         $rtn->data['data'] = [];
-
         $acquireAllResponse = $this->repository->acquireAll();
         
-        if ($acquireAllResponse->success && $acquireAllResponse->hasData) {
+        if ($acquireAllResponse->success) {
             $rtn->setSuccessDefault();
             $rtn->data['data'] = $acquireAllResponse->data;
         } else {
