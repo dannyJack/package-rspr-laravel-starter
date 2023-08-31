@@ -4,6 +4,7 @@ import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js';
 import 'admin-lte';
 import jqueryOverlayScrollbars from 'admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js';
 import toastr from 'admin-lte/plugins/toastr/toastr.min.js';
+// import './compile-vue.js'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -44,5 +45,3 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
     }
 });
-
-// import './compile-vue.js'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration

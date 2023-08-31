@@ -180,6 +180,147 @@ RSPRLog::info('this is an alert message');
 RSPRLog::debug('this is an alert message');
 ```
 
+## Vue Integration using Vite
+
+first runn the following command to install the vue packages 
+
+```
+npm i vue@next
+npm i @vitejs/plugin-vue
+```
+
+then publish from vendor the pre-configured js files for vue
+
+```
+php artisan vendor:publish --tag=rspr-vue
+```
+
+also to be sure that your reference temporary files exists lets also publish all the tmp files
+
+```
+php artisan vendor:publish --tag=rspr-tmp
+```
+
+now lets start integrating vue in your code
+first check your layouts the parent blades should have the following codes
+
+```
+    @if(View::hasSection('has-vue'))
+        <script src="{{ rspr::vers('js/vue-component.js') }}"></script>
+    @endif
+```
+
+it will look something like this
+
+```
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@if(View::hasSection('title'))@yield('title'){{ ' - ' }}@endif{{ config('app.name', '') }}</title>
+    @if(View::hasSection('has-vue'))
+        <script src="{{ rspr::vers('js/vue-component.js') }}"></script>
+    @endif
+    @vite(['resources/css/compile.css', 'resources/js/compile.js'])
+    @stack('cssAsset')
+    <link href="{{ rspr::vers('css/app.css') }}" rel="stylesheet" />
+    @stack('css')
+</head>
+```
+
+the important thing in there is that your have the script for "vue-component.js"
+now lets go to your "compile.js" file and add the following code or uncomment the code
+
+```
+import './compile-vue.js'; 
+```
+
+it should look like this
+
+```
+import axios from 'axios';
+import $ from 'jquery';
+import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js';
+import 'admin-lte';
+import jqueryOverlayScrollbars from 'admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js';
+import toastr from 'admin-lte/plugins/toastr/toastr.min.js';
+import './compile-vue.js';
+```
+
+now copy the "HelloWorld.vue.tmp" and name it "Helloworld.vue" without the .tmp extension
+then in your "vite.config.js" uncomment or add the vue integration code
+
+```
+import vue from '@vitejs/plugin-vue';
+
+var viteConfig = {
+    plugins: [
+        vue(), 
+```
+
+and it should look something like this
+
+```
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import dotenv from 'dotenv';
+import vue from '@vitejs/plugin-vue';
+import fs from 'fs';
+
+dotenv.config();
+
+var viteConfig = {
+    plugins: [
+        vue(),
+        laravel({
+            input: ['resources/css/compile.css', 'resources/js/compile.js'],
+            refresh: true
+        })
+    ],
+```
+
+now in your "vue-component.js" change the "dashboard.index" to the corresponding route name of your page which you are integrating the vue js
+as for me I will change it to "project.index"
+so from this
+
+```
+'use strict';
+
+window.vueComponentPageKeyValuPair = {
+    'dashboard.index': [
+        'hello-world'
+    ]
+};
+```
+
+to this
+
+```
+'use strict';
+
+window.vueComponentPageKeyValuPair = {
+    'project.index': [
+        'hello-world'
+    ]
+};
+```
+
+now in your page add the following code
+
+```
+@section('has-vue', '')
+<hello-world></hello-world>
+```
+
+then all you need to do is build your scripts
+
+```
+npm run build
+```
+
+then you should be able to see your vue component in your page
+
 ## License
 
 this package is free, open source, and GPL friendly. You can use it for
