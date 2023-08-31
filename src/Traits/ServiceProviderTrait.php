@@ -244,9 +244,7 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/js/components/HelloWorld.vue.tmp') => $this->customProjectPath('resources/js/components/HelloWorld.vue.tmp'),
         ];
         $this->pubVueTmp = [
-            $this->customCurrentPath('resources/js/components/HelloWorld.vue.tmp') => $this->customProjectPath('resources/js/components/HelloWorld.vue.tmp'),
-            $this->customCurrentPath('resources/views/layouts/sample.blade.php.tmp') => $this->customProjectPath('resources/views/layouts/sample.blade.php.tmp'),
-            $this->customCurrentPath('resources/views/pages/sample.blade.php.tmp') => $this->customProjectPath('resources/views/pages/sample.blade.php.tmp')
+            $this->customCurrentPath('resources/js/components/HelloWorld.vue.tmp') => $this->customProjectPath('resources/js/components/HelloWorld.vue.tmp')
         ];
 
         // DAN (2023/08/31 08:20) - other publishers
