@@ -35,8 +35,11 @@ trait ServiceProviderTrait
     private $pubResourcesCss = [];
     private $pubResourcesJs = [];
     private $pubResourcesViews = [];
+    private $pubResourcesViewsTmp = [];
     private $pubService = [];
     private $pubViteConfig = [];
+    private $pubVue = [];
+    private $pubVueTmp = [];
 
     protected function registerPublishers()
     {
@@ -74,6 +77,8 @@ trait ServiceProviderTrait
         $this->publishes($this->pubResourcesViews, 'rspr-resources-views');
         $this->publishes($this->pubService, 'rspr-service');
         $this->publishes($this->pubViteConfig, 'rspr-vite-config');
+        $this->publishes($this->pubVue, 'rspr-vue');
+        $this->publishes($this->pubVueTmp, 'rspr-vue-tmp');
         $this->publishes(
             $this->pubConfig
             + $this->pubControllerTmp
@@ -103,7 +108,9 @@ trait ServiceProviderTrait
             + $this->pubModelTmp
             + $this->pubPublicJsTmp
             + $this->pubRepositoryTmp
-            + $this->pubResponseCodeTmp,
+            + $this->pubResponseCodeTmp
+            + $this->pubResourcesViewsTmp
+            + $this->pubVueTmp,
             'rspr-tmp'
         );
     }
@@ -217,14 +224,33 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/views/layouts/common/app.blade.php.txt') => $this->customProjectPath('resources/views/layouts/common/app.blade.php'),
             $this->customCurrentPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php.txt') => $this->customProjectPath('resources/views/assets/js/common/asset-js-toastr-message.blade.php'),
             $this->customCurrentPath('resources/views/pages/auth/dashboard/index.blade.php.txt') => $this->customProjectPath('resources/views/pages/auth/dashboard/index.blade.php'),
-            $this->customCurrentPath('resources/views/pages/guest/auth/login.blade.php.txt') => $this->customProjectPath('resources/views/pages/guest/auth/login.blade.php')
+            $this->customCurrentPath('resources/views/pages/guest/auth/login.blade.php.txt') => $this->customProjectPath('resources/views/pages/guest/auth/login.blade.php'),
+            $this->customCurrentPath('resources/views/layouts/sample.blade.php.tmp') => $this->customProjectPath('resources/views/layouts/sample.blade.php.tmp'),
+            $this->customCurrentPath('resources/views/pages/sample.blade.php.tmp') => $this->customProjectPath('resources/views/pages/sample.blade.php.tmp')
         ], $this->pubAssetElement);
+        $this->pubResourcesViewsTmp = [
+            $this->customCurrentPath('resources/views/layouts/sample.blade.php.tmp') => $this->customProjectPath('resources/views/layouts/sample.blade.php.tmp'),
+            $this->customCurrentPath('resources/views/pages/sample.blade.php.tmp') => $this->customProjectPath('resources/views/pages/sample.blade.php.tmp')
+        ];
         $this->pubService = [
             $this->customCurrentPath('app/Services/GlobalProjectService.php.txt') => $this->customProjectPath('app/Services/GlobalProjectService.php')
         ];
         $this->pubViteConfig = [
             $this->customCurrentPath('root-files/vite.config.js') => $this->customProjectPath('vite.config.js')
         ];
+        $this->pubVue = [
+            $this->customCurrentPath('public/js/vue-component.js') => $this->customProjectPath('public/js/vue-component.js'),
+            $this->customCurrentPath('resources/js/compile-vue.js') => $this->customProjectPath('resources/js/compile-vue.js'),
+            $this->customCurrentPath('resources/js/components/HelloWorld.vue.tmp') => $this->customProjectPath('resources/js/components/HelloWorld.vue.tmp'),
+        ];
+        $this->pubVueTmp = [
+            $this->customCurrentPath('resources/js/components/HelloWorld.vue.tmp') => $this->customProjectPath('resources/js/components/HelloWorld.vue.tmp'),
+            $this->customCurrentPath('resources/views/layouts/sample.blade.php.tmp') => $this->customProjectPath('resources/views/layouts/sample.blade.php.tmp'),
+            $this->customCurrentPath('resources/views/pages/sample.blade.php.tmp') => $this->customProjectPath('resources/views/pages/sample.blade.php.tmp')
+        ];
+
+        // DAN (2023/08/31 08:20) - other publishers
+
         $this->pubRepositoryComplete = array_merge([
             //
         ], $this->pubRepository, $this->pubResponseOnlyRepository, $this->pubResponseOnlyParent);

@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@if(View::hasSection('title'))@yield('title'){{ ' - ' }}@endif{{ config('app.name', '') }}</title>
+    {{-- DAN (2023/08/31 08:14) - RSPR-VUE-INTEGRATION - uncomment for vue integration --}}
+    {{-- @if(View::hasSection('has-vue'))
+        <script src="{{ rspr::vers('js/vue-component.js') }}"></script>
+    @endif --}}
     @vite(['resources/css/compile.css', 'resources/js/compile.js'])
     @stack('cssAsset')
     <link href="{{ rspr::vers('css/app.css') }}" rel="stylesheet" />

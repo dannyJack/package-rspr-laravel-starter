@@ -1,0 +1,15 @@
+@extends('layouts.auth.app')
+@section('bodyClass', 'pg-sample')
+{{-- DAN (2023/08/31 08:14) - RSPR-VUE-INTEGRATION - uncomment for vue integration --}}
+{{-- @section('has-vue', '') --}}
+@section('contentHeader')
+    @section('contentHeaderTitle')
+        <i class="fas fa-sheet-plastic"></i> {{ __('words.Sample') }}
+    @endsection
+    <a href="{{-- route('sample.index') --}}"><button class="btn btn-dark" >{{ __('words.AddSample') }}</button></a>
+@endsection
+@section('content')
+    {{-- DAN (2023/08/31 08:14) - RSPR-VUE-INTEGRATION - uncomment for vue integration --}}
+    {{-- <hello-world></hello-world> --}}
+    Hello World
+@endsection

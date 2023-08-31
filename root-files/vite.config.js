@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import dotenv from 'dotenv';
+// import vue from '@vitejs/plugin-vue'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
 import fs from 'fs';
 
 dotenv.config();
 
 var viteConfig = {
     plugins: [
+        // vue(), // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
         laravel({
             input: ['resources/css/compile.css', 'resources/js/compile.js'],
             refresh: true

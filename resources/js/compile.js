@@ -44,3 +44,5 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
     }
 });
+
+// import './compile-vue.js'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
