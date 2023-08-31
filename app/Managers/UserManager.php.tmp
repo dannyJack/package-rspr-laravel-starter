@@ -38,7 +38,6 @@ class UserManager extends Manager
     {
         $rtn = $this->response();
         $rtn->data['data'] = null;
-
         $acquireResponse = $this->repository->acquire($id);
 
         if ($acquireResponse->success && $acquireResponse->hasData) {
