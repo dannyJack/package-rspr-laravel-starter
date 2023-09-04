@@ -138,31 +138,27 @@ trait ModelTrait
     .*======================================================================*/
 
     /**
-     * id (int)
+     * id
      *
-     * @return Attribute
+     * @return int
      */
-    public function id(): Attribute
+    public function getIdAttribute($value): int
     {
-        return Attribute::make(
-            get: function ($value) {
-                $rtn = 0;
+        $rtn = 0;
 
-                if ($this->primaryKey == 'id') {
-                    if (!is_null($value)) {
-                        $rtn = $value;
-                    }
-                } else {
-                    $reflectionClass = new \ReflectionClass($this);
-
-                    if ($reflectionClass->hasProperty($this->getKeyName())) {
-                        $rtn = $reflectionClass->getProperty($this->getKeyName());
-                    }
-                }
-
-                return $rtn;
+        if ($this->primaryKey == 'id') {
+            if (!is_null($value)) {
+                $rtn = $value;
+            } else {
+                $rtn = $this[$this->primaryKey];
             }
-        );
+        } else {
+            if (isset($this[$this->primaryKey])) {
+                $rtn = $this[$this->primaryKey];
+            }
+        }
+
+        return $rtn;
     }
 
     /**
