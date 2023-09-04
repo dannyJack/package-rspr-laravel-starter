@@ -186,10 +186,10 @@ trait ServiceProviderTrait
         $this->pubReact = [
             $this->customCurrentPath('public/js/vue-component.js') => $this->customProjectPath('public/js/vue-component.js'),
             $this->customCurrentPath('resources/js/compile-react.js') => $this->customProjectPath('resources/js/compile-react.js'),
-            $this->customCurrentPath('resources/js/components/HelloWorldReact.jsx.tmp') => $this->customProjectPath('resources/js/components/HelloWorldReact.jsx.tmp'),
+            $this->customCurrentPath('resources/js/components/react/HelloWorldReact.jsx.tmp') => $this->customProjectPath('resources/js/components/react/HelloWorldReact.jsx.tmp'),
         ];
         $this->pubReactTmp = [
-            $this->customCurrentPath('resources/js/components/HelloWorldReact.jsx.tmp') => $this->customProjectPath('resources/js/components/HelloWorldReact.jsx.tmp')
+            $this->customCurrentPath('resources/js/components/react/HelloWorldReact.jsx.tmp') => $this->customProjectPath('resources/js/components/react/HelloWorldReact.jsx.tmp')
         ];
         $this->pubRepository = [
             $this->customCurrentPath('app/Repositories/Repository.php.txt') => $this->customProjectPath('app/Repositories/Repository.php'),
