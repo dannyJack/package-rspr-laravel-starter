@@ -1,0 +1,12 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+export default function HelloWorldReact() {
+    return (
+        <h1>Hello React! 1</h1>
+    );
+}
+
+if (document.getElementById('hello-world-react')) {
+    ReactDOM.render(<HelloWorldReact />, document.getElementById('hello-world-react'));
+}

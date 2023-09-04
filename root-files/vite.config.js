@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import dotenv from 'dotenv';
 // import vue from '@vitejs/plugin-vue'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
+// import react from '@vitejs/plugin-react'; // DAN (2023/09/04 10:44) - RSPR-REACT-INTEGRATION - uncomment for react integration
 import fs from 'fs';
 
 dotenv.config();
@@ -9,6 +10,7 @@ dotenv.config();
 var viteConfig = {
     plugins: [
         // vue(), // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
+        // react(), // DAN (2023/09/04 10:44) - RSPR-REACT-INTEGRATION - uncomment for react integration
         laravel({
             input: ['resources/css/compile.css', 'resources/js/compile.js'],
             refresh: true

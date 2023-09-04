@@ -5,6 +5,7 @@ import 'admin-lte';
 import jqueryOverlayScrollbars from 'admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js';
 import toastr from 'admin-lte/plugins/toastr/toastr.min.js';
 // import './compile-vue.js'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
+// import './compile-react.js'; // DAN (2023/09/04 10:45) - RSPR-REACT-INTEGRATION - uncomment for react integration
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
