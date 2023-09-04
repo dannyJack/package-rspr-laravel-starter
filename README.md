@@ -321,6 +321,16 @@ npm run build
 
 then you should be able to see your vue component in your page
 
+## React Integration using Vite
+
+required packages
+
+```
+react
+react-dom
+@vitejs/plugin-react
+```
+
 ## License
 
 this package is free, open source, and GPL friendly. You can use it for
