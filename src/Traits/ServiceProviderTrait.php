@@ -184,7 +184,6 @@ trait ServiceProviderTrait
             $this->customCurrentPath('public/js/page/user.js.tmp') => $this->customProjectPath('public/js/page/user.js.tmp')
         ];
         $this->pubReact = [
-            $this->customCurrentPath('public/js/vue-component.js') => $this->customProjectPath('public/js/vue-component.js'),
             $this->customCurrentPath('resources/js/compile-react.js') => $this->customProjectPath('resources/js/compile-react.js'),
             $this->customCurrentPath('resources/js/components/react/HelloWorldReact.jsx.tmp') => $this->customProjectPath('resources/js/components/react/HelloWorldReact.jsx.tmp'),
         ];
