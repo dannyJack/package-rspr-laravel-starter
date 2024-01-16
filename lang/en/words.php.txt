@@ -16,6 +16,7 @@ return [
     // G
 
     // H
+    'HelloFromVue' => 'Hello from Vue!'
 
     // I
 

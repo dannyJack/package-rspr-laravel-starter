@@ -187,6 +187,8 @@ first runn the following command to install the vue packages
 ```
 npm i vue@next
 npm i @vitejs/plugin-vue
+npm i lang.js
+composer require kg-bot/laravel-localization-to-vue
 ```
 
 then publish from vendor the pre-configured js files for vue
@@ -317,6 +319,12 @@ then all you need to do is build your scripts
 
 ```
 npm run build
+```
+
+run language resource for vue
+
+```
+php artisan app:update-lang-resource
 ```
 
 then you should be able to see your vue component in your page

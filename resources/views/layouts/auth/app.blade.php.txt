@@ -8,6 +8,11 @@
     <title>@if(View::hasSection('title'))@yield('title'){{ ' - ' }}@endif{{ config('app.name', '') }}</title>
     {{-- DAN (2023/08/31 08:14) - RSPR-VUE-INTEGRATION - uncomment for vue integration --}}
     {{-- @if(View::hasSection('has-vue'))
+        <script>
+            window.defaultLocale = "{{ config('app.locale') }}";
+            window.fallbackLocale = "{{ config('app.fallback_locale') }}";
+            window.languageResourceVersion = "{{ rspr::vers('app/public/lang/language-resource.json', true, true) }}";
+        </script>
         <script src="{{ rspr::vers('js/vue-component.js') }}"></script>
     @endif --}}
     @vite(['resources/css/compile.css', 'resources/js/compile.js'])

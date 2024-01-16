@@ -4,7 +4,7 @@
 
 // class [projectname]
 // {
-//     public function m[Model](): [Model]]
+//     public static function m[Model](): [Model]
 //     {
 //         return resolve([Model]::class);
 //     }
