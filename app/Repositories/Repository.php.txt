@@ -382,6 +382,83 @@ class Repository
         return $rtn;
     }
 
+    /**
+     * annul a list of record
+     * call NTC (No Try Catch) method
+     */
+    public function annulBulkRecord(array $attributes, bool $hardDelete = null, bool $logResponseCheckWarning = true): RepositoryResponseCollection
+    {
+        $rtn = $this->responseCollection();
+
+        try {
+            $acquiredData = null;
+
+            if (! empty($this->model)) {
+                $acquireAllResponse = $this->NTCacquireAll($attributes);
+
+                if ($acquireAllResponse->success && $acquireAllResponse->hasData) {
+                    $rtn->hasData = true;
+                    $rtn->data = $acquireAllResponse->data;
+                    $acquiredData = $rtn->data;
+                }
+            }
+
+            $rtn = $this->NTCannulBulkRecord($attributes, $hardDelete, $logResponseCheckWarning, $acquiredData);
+        } catch (\Exception $e) {
+            \RSPRLog::error('Exception: '.$e->getMessage());
+        } catch (\Error $e) {
+            \RSPRLog::error($e->getMessage());
+        }
+
+        return $rtn;
+    }
+
+    /**
+     * annul a list of record
+     * NTC (No Try Catch) method
+     */
+    public function NTCannulBulkRecord(array $attributes, bool $hardDelete = null, bool $logResponseCheckWarning = true, $acquiredData = null): RepositoryResponseCollection
+    {
+        $rtn = $this->responseCollection();
+        $hasAcquiredData = ! empty($acquiredData);
+
+        if (! empty($this->model)) {
+            if (! $hasAcquiredData) {
+                $acquireAllResponse = $this->NTCacquireAll($attributes);
+
+                if ($acquireAllResponse->success && $acquireAllResponse->hasData) {
+                    $hasAcquiredData = true;
+                    $acquiredData = $acquireAllResponse->data;
+                }
+            }
+
+            if ($hasAcquiredData) {
+                $rtn->hasData = true;
+                $rtn->data = $acquiredData;
+                $query = $this->model::query();
+                $query = $this->conditionalQueries($query, $attributes);
+
+                if (! $hardDelete && $this->model::isSoftDeletes()) {
+                    $success = $query->update([
+                        $this->model::DELETED_AT => $this->model::DELETE_FLAG_YES,
+                    ]);
+                } else {
+                    $success = $query->delete();
+                }
+
+                if ($success) {
+                    $rtn->success = true;
+                }
+            }
+        }
+
+        if ($logResponseCheckWarning) {
+            \RSPRLog::responseCheck()->warning($rtn);
+        }
+
+        return $rtn;
+    }
+
     /*======================================================================
     .* PRIVATE METHODS
     .*======================================================================*/
