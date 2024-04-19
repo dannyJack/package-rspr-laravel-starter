@@ -9,7 +9,7 @@ use App\Responses\ResponseItem;
 
 class RepositoryResponseItem extends ResponseItem
 {
-    public Model $data;
+    public $data;
     public bool $success = false;
     public bool $hasData = false;
 

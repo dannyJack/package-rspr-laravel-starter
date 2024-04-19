@@ -405,7 +405,7 @@ class Repository
 
             $rtn = $this->NTCannulBulkRecord($attributes, $hardDelete, $logResponseCheckWarning, $acquiredData);
         } catch (\Exception $e) {
-            \RSPRLog::error('Exception: '.$e->getMessage());
+            \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
             \RSPRLog::error($e->getMessage());
         }
