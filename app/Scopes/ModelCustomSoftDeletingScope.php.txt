@@ -10,7 +10,6 @@ class ModelCustomSoftDeletingScope extends OriginalSoftDeletingScope
 {
     public function apply(Builder $builder, Model $model)
     {
-        // $builder->where($model->getTable() . '.' . $model::DELETED_AT, '=', 0);
         $builder->whereRaw($model->getTable() . '.' . $model::DELETED_AT . '=0');
     }
 

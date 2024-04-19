@@ -12,9 +12,9 @@ class ModelAuthenticatable extends Authenticatable
     const DELETE_FLAG_NO = 0;
     const DELETE_FLAG_YES = 1;
 
-    const CREATED_AT = 'create_at';
-    const UPDATED_AT = 'update_at';
-    const DELETED_AT = 'del_flg';
+    const CREATED_AT = 'created_at'; // DAN (2024/04/19 10:25) - please change if has a different column
+    const UPDATED_AT = 'updated_at'; // DAN (2024/04/19 10:25) - please change if has a different column
+    const DELETED_AT = 'deleted_at'; // DAN (2024/04/19 10:25) - please change if has a different column
 
     const SORT_ASC = 'asc';
     const SORT_DESC = 'desc';
