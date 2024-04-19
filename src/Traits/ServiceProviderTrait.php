@@ -162,7 +162,7 @@ trait ServiceProviderTrait
         $this->pubModel = [
             $this->customCurrentPath('app/Models/User.php.tmp') => $this->customProjectPath('app/Models/User.php.tmp'),
             $this->customCurrentPath('app/Traits/Model/ModelTrait.php.txt') => $this->customProjectPath('app/Traits/Model/ModelTrait.php'),
-            $this->customCurrentPath('app/Traits/ModelCustomSoftDeletesTrait.php.txt') => $this->customProjectPath('app/Traits/ModelCustomSoftDeletesTrait.php'),
+            $this->customCurrentPath('app/Traits/Model/ModelCustomSoftDeletesTrait.php.txt') => $this->customProjectPath('app/Traits/Model/ModelCustomSoftDeletesTrait.php'),
             $this->customCurrentPath('app/Models/Model.php.txt') => $this->customProjectPath('app/Models/Model.php'),
             $this->customCurrentPath('app/Models/ModelAuthenticatable.php.txt') => $this->customProjectPath('app/Models/ModelAuthenticatable.php'),
             // $this->customCurrentPath('app/Models/ModelCompoships.php.txt') => $this->customProjectPath('app/Models/ModelCompoships.php')
