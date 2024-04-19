@@ -5,9 +5,15 @@ namespace App\Traits\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 trait ModelTrait
 {
+    public static function isSoftDeletes()
+    {
+        return false;
+    }
+
     /*======================================================================
     .* CUSTOM METHODS
     .*======================================================================*/
@@ -115,6 +121,23 @@ trait ModelTrait
         foreach ($attributesArray as $arr) {
             # DAN (2023/08/16 11:50) - upon inserting a record you can insert/update an attribute in here
             // $data->[ATTRIBUTE] = [VALUE];
+
+            if (isset($arr[self::CREATED_AT])) {
+                if (empty($arr[self::CREATED_AT])) {
+                    $arr[self::CREATED_AT] = now();
+                }
+            } else {
+                $arr[self::CREATED_AT] = now();
+            }
+
+            if (isset($arr[self::UPDATED_AT])) {
+                if (empty($arr[self::UPDATED_AT])) {
+                    $arr[self::UPDATED_AT] = now();
+                }
+            } else {
+                $arr[self::UPDATED_AT] = now();
+            }
+
             $insertAttributesArray[] = $arr;
         }
 
@@ -183,6 +206,15 @@ trait ModelTrait
         return Attribute::make(
             get: fn ($value) => !$this->isEmpty
         );
+    }
+
+    /*======================================================================
+    .* METHODS
+    .*======================================================================*/
+
+    public function getPrimaryKey()
+    {
+        return $this->primaryKey;
     }
 
     /*======================================================================

@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Traits\Model;
+
+use App\Scopes\ModelCustomSoftDeletingScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+trait ModelCustomSoftDeletesTrait
+{
+    use SoftDeletes;
+
+    public static function isSoftDeletes()
+    {
+        return true;
+    }
+
+    // DAN (2023/09/06 19:36) - Override methods to use 0 and 1 for your tinyint column
+
+    protected function runSoftDelete()
+    {
+        $query = $this->newModelQuery()->where($this->getKeyName(), $this->getKey());
+
+        $query->update([$this->getDeletedAtColumn() => 1]);
+    }
+
+    public function restore()
+    {
+        $this->{$this->getDeletedAtColumn()} = 0;
+        $this->exists = true;
+
+        $this->save();
+    }
+
+    // Modify the query to recognize your custom soft delete column
+    public static function bootSoftDeletes()
+    {
+        static::addGlobalScope(new ModelCustomSoftDeletingScope()); // We'll define this scope next
+    }
+}

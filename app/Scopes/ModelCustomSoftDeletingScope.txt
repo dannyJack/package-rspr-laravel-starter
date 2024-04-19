@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Scopes;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope as OriginalSoftDeletingScope;
+
+class ModelCustomSoftDeletingScope extends OriginalSoftDeletingScope
+{
+    public function apply(Builder $builder, Model $model)
+    {
+        // $builder->where($model->getTable() . '.' . $model::DELETED_AT, '=', 0);
+        $builder->whereRaw($model->getTable() . '.' . $model::DELETED_AT . '=0');
+    }
+
+    public function remove(Builder $builder, Model $model)
+    {
+        $column = $model->getQualifiedDeletedAtColumn();
+        $query = $builder->getQuery();
+
+        foreach ((array) $query->wheres as $key => $where) {
+            if ($this->isSoftDeleteConstraint($where, $column)) {
+                unset($query->wheres[$key]);
+                $query->wheres = array_values($query->wheres);
+            }
+        }
+    }
+
+    protected function isSoftDeleteConstraint(array $where, $column)
+    {
+        return $where['type'] == 'Basic' && $where['column'] == $column && $where['value'] == 0;
+    }
+}

@@ -9,6 +9,20 @@ class ModelAuthenticatable extends Authenticatable
 {
     use ModelTrait;
 
+    const DELETE_FLAG_NO = 0;
+    const DELETE_FLAG_YES = 1;
+
+    const CREATED_AT = 'create_at';
+    const UPDATED_AT = 'update_at';
+    const DELETED_AT = 'del_flg';
+
+    const SORT_ASC = 'asc';
+    const SORT_DESC = 'desc';
+    const SORTS = [
+        self::SORT_ASC,
+        self::SORT_DESC,
+    ];
+
     /**
      * @var $appends
      */
