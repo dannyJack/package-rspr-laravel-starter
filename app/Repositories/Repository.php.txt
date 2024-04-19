@@ -7,6 +7,7 @@ use App\Responses\Repository\RepositoryResponseCollection;
 use App\Responses\Repository\RepositoryResponseItem;
 use App\Responses\Repository\RepositoryResponsePagination;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class Repository
 {
@@ -49,12 +50,12 @@ class Repository
      *
      * @return RepositoryResponseCollection
      */
-    public function acquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseCollection
+    public function acquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponseCollection
     {
         $rtn = $this->responseCollection();
 
         try {
-            $rtn = $this->NTCacquireAll($attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
+            $rtn = $this->NTCacquireAll($attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -75,13 +76,13 @@ class Repository
      *
      * @return RepositoryResponseCollection
      */
-    public function NTCacquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseCollection
+    public function NTCacquireAll(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponseCollection
     {
         $rtn = $this->responseCollection();
 
         if (!empty($this->model)) {
             $query = $this->model::query();
-            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
             $rtn->data = $query->get();
             $rtn->success = true;
             $rtn->hasData = $rtn->data->count() > 0;
@@ -90,12 +91,12 @@ class Repository
         return $rtn;
     }
 
-    public function acquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponsePagination
+    public function acquireAllReturnPagination(int $perPage = 10, int $page = 1, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponsePagination
     {
         $rtn = $this->responsePagination();
 
         try {
-            $rtn = $this->NTCacquireAllReturnPagination($attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
+            $rtn = $this->NTCacquireAllReturnPagination($perPage, $page, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -105,14 +106,14 @@ class Repository
         return $rtn;
     }
 
-    public function NTCacquireAllReturnPagination(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponsePagination
+    public function NTCacquireAllReturnPagination(int $perPage = 10, int $page = 1, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponsePagination
     {
         $rtn = $this->responsePagination();
 
         if (!empty($this->model)) {
             $query = $this->model::query();
-            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
-            $rtn->data = $query->paginate(10);
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
+            $rtn->data = $query->paginate($perPage, ['*'], 'page', $page);
             $rtn->success = true;
             $rtn->hasData = $rtn->data->count() > 0;
         }
@@ -132,12 +133,12 @@ class Repository
      *
      * @return RepositoryResponseItem
      */
-    public function acquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseItem
+    public function acquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
         try {
-            $rtn = $this->NTCacquire($id, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
+            $rtn = $this->NTCacquire($id, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -163,13 +164,57 @@ class Repository
      *
      * @return RepositoryResponseItem
      */
-    public function NTCacquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): RepositoryResponseItem
+    public function NTCacquire(int $id, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
         if (!empty($this->model)) {
             $query = $this->model::where(resolve($this->model)->getKeyName(), $id);
-            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $withTrashed);
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
+            $data = $query->first();
+            $rtn->success = true;
+
+            if (empty($data)) {
+                $rtn->data = $this->model::empty();
+            } else {
+                $rtn->hasData = true;
+                $rtn->data = $data;
+            }
+        }
+
+        return $rtn;
+    }
+
+    public function acquireByAttributes(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponseItem
+    {
+        $rtn = $this->responseItem();
+
+        try {
+            $rtn = $this->NTCacquireByAttributes($attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
+        } catch (\Exception $e) {
+            \RSPRLog::error('Exception: '.$e->getMessage());
+        } catch (\Error $e) {
+            \RSPRLog::error($e->getMessage());
+        }
+
+        if (empty($rtn)) {
+            $rtn = $this->model::empty();
+        }
+
+        return $rtn;
+    }
+
+    /**
+     * acquire a model record
+     * NTC (No Try Catch) method
+     */
+    public function NTCacquireByAttributes(array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): RepositoryResponseItem
+    {
+        $rtn = $this->responseItem();
+
+        if (! empty($this->model)) {
+            $query = $this->model::query();
+            $query = $this->conditionalQueries($query, $attributes, $exceptAttributes, $orderByAttributes, $withRelationship, $whereHas, $withTrashed);
             $data = $query->first();
             $rtn->success = true;
 
@@ -191,12 +236,12 @@ class Repository
      * @param array $attributes
      * @return RepositoryResponseItem
      */
-    public function add(array $attributes): RepositoryResponseItem
+    public function add(array $attributes, array $withRelationship = []): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
         try {
-            $rtn = $this->NTCadd($attributes);
+            $rtn = $this->NTCadd($attributes, $withRelationship);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -213,7 +258,7 @@ class Repository
      * @param array $attributes
      * @return RepositoryResponseItem
      */
-    public function NTCadd(array $attributes): RepositoryResponseItem
+    public function NTCadd(array $attributes, array $withRelationship = []): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
@@ -225,7 +270,71 @@ class Repository
 
                 if (!empty($data)) {
                     $rtn->hasData = true;
-                    $rtn->data = $data->fresh();
+
+                    if (is_null(resolve($this->model)->getPrimaryKey())) {
+                        $rtn->data = $data->fresh();
+                    } else {
+                        $rtn->data = $this->NTCacquire($data->id, [], [], [], $withRelationship)->data;
+                    }
+                }
+            }
+        }
+
+        \RSPRLog::responseCheck()->warning($rtn);
+
+        return $rtn;
+    }
+
+    /**
+     * add a list of model record
+     * call NTC (No Try Catch) method
+     */
+    public function addBulk(array $attributes): RepositoryResponseCollection
+    {
+        $rtn = $this->responseCollection();
+
+        try {
+            $rtn = $this->NTCaddBulk($attributes);
+        } catch (\Exception $e) {
+            \RSPRLog::error('Exception: '.$e->getMessage());
+        } catch (\Error $e) {
+            \RSPRLog::error($e->getMessage());
+        }
+
+        return $rtn;
+    }
+
+    /**
+     * add a list of model record
+     * NTC (No Try Catch) method
+     */
+    public function NTCaddBulk(array $attributes): RepositoryResponseCollection
+    {
+        $rtn = $this->responseCollection();
+
+        if (! empty($this->model) && count($attributes) != 0) {
+            $lastId = null;
+            $lastData = $this->model::orderBy(resolve($this->model)->getPrimaryKey(), 'desc')->limit(1)->get();
+
+            if (count($lastData) > 0) {
+                $lastId = $lastData[0]->id;
+            }
+
+            $data = $this->model::inserting($attributes);
+
+            if ($data) {
+                $rtn->success = true;
+                $data = $this->model::query();
+
+                if (! is_null($lastId)) {
+                    $data = $data->where(resolve($this->model)->getPrimaryKey(), '>', $lastId);
+                }
+
+                $data = $data->limit(count($attributes))->get();
+
+                if (! empty($data)) {
+                    $rtn->hasData = true;
+                    $rtn->data = Collection::make($data);
                 }
             }
         }
@@ -243,7 +352,7 @@ class Repository
      * @param array $attributes
      * @return RepositoryResponseItem
      */
-    public function adjust(int $id, array $attributes): RepositoryResponseItem
+    public function adjust(int $id, array $attributes, array $withRelationship = []): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
@@ -260,7 +369,7 @@ class Repository
                 }
             }
 
-            $rtn = $this->NTCadjust($id, $attributes, $acquiredData);
+            $rtn = $this->NTCadjust($id, $attributes, $withRelationship, $acquiredData);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -278,14 +387,14 @@ class Repository
      * @param array $attributes
      * @return RepositoryResponseItem
      */
-    public function NTCadjust(int $id, array $attributes, null|Model $acquiredData = null): RepositoryResponseItem
+    public function NTCadjust(int $id, array $attributes, array $withRelationship = [], Model $acquiredData = null): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
         $hasAcquiredData = !empty($acquiredData);
 
         if (!empty($this->model) && count($attributes) != 0) {
             if (!$hasAcquiredData) {
-                $acquireResponse = $this->NTCacquire($id);
+                $acquireResponse = $this->NTCacquire($id, [], [], [], $withRelationship);
 
                 if ($acquireResponse->success && $acquireResponse->hasData) {
                     $hasAcquiredData = true;
@@ -300,7 +409,74 @@ class Repository
 
                 if ($success) {
                     $rtn->success = true;
-                    $rtn->data = $acquireResponse->data->fresh();
+                    $rtn->data = $this->NTCacquire($acquireResponse->data->id, [], [], [], $withRelationship)->data;
+                }
+            }
+        }
+
+        \RSPRLog::responseCheck()->warning($rtn);
+
+        return $rtn;
+    }
+
+    /**
+     * adjust by attributes a model record
+     * call NTC (No Try Catch) method
+     */
+    public function adjustByAttributes(array $whereAttributes, array $attributes, array $withRelationship = []): RepositoryResponseItem
+    {
+        $rtn = $this->responseItem();
+
+        try {
+            $acquiredData = null;
+
+            if (! empty($this->model)) {
+                $acquireResponse = $this->NTCacquireByAttributes($whereAttributes);
+
+                if ($acquireResponse->success && $acquireResponse->hasData) {
+                    $rtn->hasData = true;
+                    $rtn->data = $acquireResponse->data;
+                    $acquiredData = $rtn->data;
+                }
+            }
+
+            $rtn = $this->NTCadjustByAttributes($whereAttributes, $attributes, $withRelationship, $acquiredData);
+        } catch (\Exception $e) {
+            \RSPRLog::error('Exception: '.$e->getMessage());
+        } catch (\Error $e) {
+            \RSPRLog::error($e->getMessage());
+        }
+
+        return $rtn;
+    }
+
+    /**
+     * adjust by attributes a model record
+     * NTC (No Try Catch) method
+     */
+    public function NTCadjustByAttributes(array $whereAttributes, array $attributes, array $withRelationship = [], Model $acquiredData = null): RepositoryResponseItem
+    {
+        $rtn = $this->responseItem();
+        $hasAcquiredData = ! empty($acquiredData);
+
+        if (! empty($this->model) && count($attributes) != 0) {
+            if (! $hasAcquiredData) {
+                $acquireResponse = $this->NTCacquireByAttributes($whereAttributes, [], [], $withRelationship);
+
+                if ($acquireResponse->success && $acquireResponse->hasData) {
+                    $hasAcquiredData = true;
+                    $acquiredData = $acquireResponse->data;
+                }
+            }
+
+            if ($hasAcquiredData) {
+                $rtn->hasData = true;
+                $rtn->data = $acquiredData;
+                $success = $acquiredData->update($attributes);
+
+                if ($success) {
+                    $rtn->success = true;
+                    $rtn->data = $this->NTCacquire($acquireResponse->data->id, [], [], [], $withRelationship)->data;
                 }
             }
         }
@@ -317,7 +493,7 @@ class Repository
      * @param int $id
      * @return RepositoryResponseItem
      */
-    public function annul(int $id, null|bool $hardDelete = null): RepositoryResponseItem
+    public function annul(int $id, array $withRelationship = [], bool $hardDelete = null): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
 
@@ -325,7 +501,7 @@ class Repository
             $acquiredData = null;
 
             if (!empty($this->model)) {
-                $acquireResponse = $this->NTCacquire($id);
+                $acquireResponse = $this->NTCacquire($id, [], [], [], $withRelationship);
 
                 if ($acquireResponse->success && $acquireResponse->hasData) {
                     $rtn->hasData = true;
@@ -334,7 +510,7 @@ class Repository
                 }
             }
 
-            $rtn = $this->NTCannul($id, $hardDelete, $acquiredData);
+            $rtn = $this->NTCannul($id, $withRelationship, $hardDelete, $acquiredData);
         } catch (\Exception $e) {
             \RSPRLog::error('Exception: ' . $e->getMessage());
         } catch (\Error $e) {
@@ -351,14 +527,14 @@ class Repository
      * @param int $id
      * @return RepositoryResponseItem
      */
-    public function NTCannul(int $id, null|bool $hardDelete = null, null|Model $acquiredData = null): RepositoryResponseItem
+    public function NTCannul(int $id, array $withRelationship = [], bool $hardDelete = null, Model $acquiredData = null): RepositoryResponseItem
     {
         $rtn = $this->responseItem();
         $hasAcquiredData = !empty($acquiredData);
 
         if (!empty($this->model)) {
             if (!$hasAcquiredData) {
-                $acquireResponse = $this->NTCacquire($id);
+                $acquireResponse = $this->NTCacquire($id, [], [], [], $withRelationship);
 
                 if ($acquireResponse->success && $acquireResponse->hasData) {
                     $hasAcquiredData = true;
@@ -463,22 +639,32 @@ class Repository
     .* PRIVATE METHODS
     .*======================================================================*/
     
-    private function conditionalQueries(Builder $query, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], bool $withTrashed = false): Builder
+    protected function conditionalQueries(Builder $query, array $attributes = [], array $exceptAttributes = [], array $orderByAttributes = [], array $withRelationship = [], array $whereHas = [], bool $withTrashed = false): Builder
     {
         $query = $query->where(function ($query) use ($attributes) {
             foreach ($attributes as $key => $value) {
                 if (is_array($value)) {
                     if (is_numeric($key)) {
-                        $query->where(function ($query) use ($value) {
-                            foreach ($value as $key2 => $value2) {
-                                $query->where($key2, $value2);
+                        if (is_numeric(array_key_first($value))) {
+                            if (count($value) == 3) {
+                                $query->where($value[0], $value[1], $value[2]);
+                            } elseif (count($value) == 2) {
+                                $query->where($value[0], $value[1]);
                             }
+                        } else {
+                            foreach ($value as $key2 => $value2) {
+                                $query->where(function ($query) use ($key2, $value2) {
+                                    $query->where($key2, $value2);
 
-                            return $query;
-                        });
+                                    return $query;
+                                });
+                            }
+                        }
                     } else {
                         $query->whereIn($key, $value);
                     }
+                } elseif (is_numeric($key) && is_string($value)) {
+                    $query->whereRaw($value);
                 } else {
                     $query->where($key, $value);
                 }
@@ -493,6 +679,14 @@ class Repository
 
         foreach ($orderByAttributes as $key => $value) {
             $query = $query->orderBy($key, $value);
+        }
+
+        foreach ($whereHas as $key => $value) {
+            if (is_string($key) && is_callable($value)) {
+                $query = $query->whereHas($key, $value);
+            } else {
+                $query = $query->whereHas($value);
+            }
         }
 
         if ($withTrashed) {
