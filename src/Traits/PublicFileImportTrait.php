@@ -11,9 +11,9 @@ trait PublicFileImportTrait
      * @param bool $onlyVersion = return only the file version
      * @return string $url = Full URL file path
      */
-    public static function vers(string $urlFile, bool $onlyVersion = false, bool $isStoragePath = false, string $storageDisk = null)
+    public static function vers(string $urlFile, bool $onlyVersion = false, bool $isStoragePath = false, string $storageDisk = null, bool $secure = false)
     {
-        $url = url($urlFile);
+        $url = url($urlFile, [], $secure);
         $version = '';
 
         if ($isStoragePath) {
