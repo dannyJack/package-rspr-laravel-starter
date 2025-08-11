@@ -80,17 +80,19 @@ this will copy a compile.js to ou resources/js folder which includes an import o
 - admin-lte
 - toastr
 
-NOTE: might need to use Node v.18 before install npm packages (npm i)
+NOTE: need to use Node '^20.19.0 || >=22.12.0' before install npm packages (npm i)
 
 ```
-nvm install 18
-nvm use 18
+nvm install 22
+nvm use 22
 ```
 
 install this dependecies via command
 
 ```
-npm i dotenv@16.3.1
+npm i dotenv@17.2.1
+npm i jquery@3.7.1
+npm i admin-lte@4.0.0-rc3
 (DOCUMENTATION TO BE CONTINUE...)
 ```
 
