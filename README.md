@@ -55,10 +55,43 @@ for starter files
 php artisan vendor:publish --tag=rspr-starter
 ```
 
+add --force in running the above command to force overwrite existing codes
+
+```
+php artisan vendor:publish --tag=rspr-starter --force
+```
+
 for sample temporary files
 
 ```
 php artisan vendor:publish --tag=rspr-tmp
+```
+
+for JS resources
+
+```
+php artisan vendor:publish --tag=rspr-resources-js
+```
+
+this will copy a compile.js to ou resources/js folder which includes an import of several javascript library including:
+
+- dotenv
+- jquery
+- admin-lte
+- toastr
+
+NOTE: might need to use Node v.18 before install npm packages (npm i)
+
+```
+nvm install 18
+nvm use 18
+```
+
+install this dependecies via command
+
+```
+npm i dotenv@16.3.1
+(DOCUMENTATION TO BE CONTINUE...)
 ```
 
 ## Global classes
