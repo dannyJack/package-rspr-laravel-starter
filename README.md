@@ -80,7 +80,14 @@ this will copy a compile.js to ou resources/js folder which includes an import o
 - admin-lte
 - toastr
 
-NOTE: need to use Node '^20.19.0 || >=22.12.0' before install npm packages (npm i)
+NOTE: need to use Node '>=22.12.0' before install npm packages (npm i)
+following this will avoid error upon running and compiling.
+
+Sample error found when running via 20.5.1
+
+```
+TypeError: crypto.hash is not a function
+```
 
 ```
 nvm install 22
@@ -93,6 +100,8 @@ install this dependecies via command
 npm i dotenv@17.2.1
 npm i jquery@3.7.1
 npm i admin-lte@4.0.0-rc3
+npm i toastr
+npm i @fortawesome/fontawesome-free
 (DOCUMENTATION TO BE CONTINUE...)
 ```
 

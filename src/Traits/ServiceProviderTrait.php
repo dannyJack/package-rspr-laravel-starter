@@ -225,7 +225,8 @@ trait ServiceProviderTrait
             $this->customCurrentPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp') => $this->customProjectPath('app/ResponseCodes/Manager/UserResponseCode.php.tmp')
         ];
         $this->pubResourcesCss = [
-            $this->customCurrentPath('resources/css/compile.css') => $this->customProjectPath('resources/css/compile.css')
+            $this->customCurrentPath('resources/css/compile.css') => $this->customProjectPath('resources/css/compile.css'),
+            $this->customCurrentPath('resources/css/admin-lte-original.css') => $this->customProjectPath('resources/css/admin-lte-original.css')
         ];
         $this->pubResourcesJs = [
             $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js')
