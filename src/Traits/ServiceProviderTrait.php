@@ -229,7 +229,8 @@ trait ServiceProviderTrait
             $this->customCurrentPath('resources/css/admin-lte-original.css') => $this->customProjectPath('resources/css/admin-lte-original.css')
         ];
         $this->pubResourcesJs = [
-            $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js')
+            $this->customCurrentPath('resources/js/compile.js') => $this->customProjectPath('resources/js/compile.js'),
+            $this->customCurrentPath('resources/js/admin-lte-custom.js') => $this->customProjectPath('resources/js/admin-lte-custom.js')
         ];
         $this->pubResourcesViews = array_merge([
             $this->customCurrentPath('resources/views/layouts/auth/app.blade.php.txt') => $this->customProjectPath('resources/views/layouts/auth/app.blade.php'),

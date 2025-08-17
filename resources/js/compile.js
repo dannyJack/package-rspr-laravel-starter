@@ -2,6 +2,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import 'admin-lte';
 import toastr from 'toastr';
+import './admin-lte-custom.js';
 // import './compile-vue.js'; // DAN (2023/08/31 08:12) - RSPR-VUE-INTEGRATION - uncomment for vue integration
 // import './compile-react.js'; // DAN (2023/09/04 10:45) - RSPR-REACT-INTEGRATION - uncomment for react integration
 
