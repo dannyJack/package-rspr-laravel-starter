@@ -3,7 +3,7 @@
 - rspr/laravel-starter
 - namespace: RSPR\LaravelStarter
 
-> Version 12.0.0
+> Version 12.0.2
 
 Laravel starter comes with helpful methods in making laravel projects
 
