@@ -111,6 +111,13 @@ npm i @fortawesome/fontawesome-free
 - RSPRL0g - same as \Log::class but with a better logging message output.
 - RSPRSlackLog - slack log messaging/notification with an implementation of RSPRL0g better logging message output.
 - RSPRLog - combined RSPRL0g and RSPRSlackLog implementation which output logs in the logger file and send message through slack webhook.
+- GlobalProjectService - should be changed to your current project name, to use please uncmoment and add the following below inside the boot method in AppServiceProvider. Just rename the GlobalProjectService to something you wanted
+
+```
+    View::composer('*', function ($view) {
+        $view->with('GlobalProjectService', app(GlobalProjectService::class));
+    });
+```
 
 ## Pre-defined Alias classes
 

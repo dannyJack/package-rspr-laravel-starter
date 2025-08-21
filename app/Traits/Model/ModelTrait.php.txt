@@ -173,10 +173,12 @@ trait ModelTrait
             if (!is_null($value)) {
                 $rtn = $value;
             } else {
-                $rtn = $this[$this->primaryKey];
+                if (property_exists($this, $this->primaryKey)) {
+                    $rtn = $this[$this->primaryKey];
+                }
             }
         } else {
-            if (isset($this[$this->primaryKey])) {
+            if (property_exists($this, $this->primaryKey)) {
                 $rtn = $this[$this->primaryKey];
             }
         }
