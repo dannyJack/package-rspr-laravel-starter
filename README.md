@@ -114,10 +114,14 @@ npm i @fortawesome/fontawesome-free
 - GlobalProjectService - should be changed to your current project name, to use please uncmoment and add the following below inside the boot method in AppServiceProvider. Just rename the GlobalProjectService to something you wanted
 
 ```
-    View::composer('*', function ($view) {
-        $view->with('GlobalProjectService', app(GlobalProjectService::class));
-    });
+    "autoload": {
+        "files": [
+            "app/Services/GlobalProjectService.php",
+        ]
+    },
 ```
+
+you may want to run "composer dump-autoload" after your have made changes to composer.json autoload section
 
 ## Pre-defined Alias classes
 
