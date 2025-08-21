@@ -7,7 +7,7 @@ trait RouteTrait
     /**
      * Check current route name
      *
-     * @param string $routeName - the route name to be check
+     * @param null|string|array $routeName - the route name to be check
      * @param string $returnStringIfTrue - the return string if true
      * @return string [$name, 'active', '']
      */
