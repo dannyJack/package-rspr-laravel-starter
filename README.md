@@ -240,7 +240,7 @@ RSPRLog::debug('this is an alert message');
 first runn the following command to install the vue packages 
 
 ```
-npm i vue@next
+npm i vue
 npm i @vitejs/plugin-vue
 npm i lang.js
 composer require kg-bot/laravel-localization-to-vue

@@ -2,6 +2,7 @@
 
 namespace RSPR\LaravelStarter;
 
+use App\Console\Commands\UpdateLangResource;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider as SP;
 use RSPR\LaravelStarter\Commands\MakeManager;
@@ -28,7 +29,8 @@ class ServiceProvider extends SP
             $this->commands([
                 MakeManager::class,
                 MakeRepository::class,
-                MakeResponseCode::class
+                MakeResponseCode::class,
+                UpdateLangResource::class
             ]);
         }
     }
