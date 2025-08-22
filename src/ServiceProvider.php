@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider as SP;
 use RSPR\LaravelStarter\Commands\MakeManager;
 use RSPR\LaravelStarter\Commands\MakeRepository;
 use RSPR\LaravelStarter\Commands\MakeResponseCode;
-use RSPR\LaravelStarter\UpdateLangResource;
+use RSPR\LaravelStarter\Commands\UpdateLangResource;
 use RSPR\LaravelStarter\Library\L0g;
 use RSPR\LaravelStarter\Helpers\BladeDirectiveHelper;
 use RSPR\LaravelStarter\Library\SlackLog;
