@@ -7,7 +7,7 @@ let vueAppList = {};
 let languageResource = null;
 var languageResourceVersion = '';
 
-import HelloWorld from './components/HelloWorld.vue'; vueAppList['hello-world'] = createApp(HelloWorld);
+import HelloWorld from './components/HelloWorld.vue'; vueAppList['hello-world'] = HelloWorld;
 
 function initVueComponents()
 {
@@ -45,12 +45,24 @@ function initVueComponents()
                 let elements = $(components[i]);
 
                 for (let el of elements) {
-                    vueAppList[components[i]].config.globalProperties.__ = (key, replacements, locale) => {
+                    const props = {};
+                    Array.from(el.attributes).forEach(attr => {
+                        try {
+                            props[attr.name] = JSON.parse(attr.value)
+                        } catch {
+                            props[attr.name] = attr.value
+                        }
+                    });
+
+                    var elComponent = createApp(vueAppList[components[i]], props);
+                    elComponent.config.globalProperties.__ = (key, replacements, locale) => {
                         return LangCustom.get(key, replacements, locale);
                     };
-                    vueAppList[components[i]].mount(components[i]);
+                    elComponent.mount(el)
                 }
             }
+
+            break;
         }
     }
 }
