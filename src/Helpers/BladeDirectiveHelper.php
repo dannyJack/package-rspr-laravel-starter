@@ -11,5 +11,9 @@ class BladeDirectiveHelper
         Blade::directive('vers', function (string $urlFile, bool $onlyVersion = false) {
             return PublicFileImportHelper::vers($urlFile, $onlyVersion);
         });
+
+        Blade::directive('vueJson', function ($expression) {
+            return "<?php echo '\"' . e(json_encode($expression)) . '\"'; ?>";
+        });
     }
 }
